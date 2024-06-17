@@ -1,0 +1,38 @@
+header{
+    height: 11vh;
+    
+    display: flex;
+    flex-direction: row;
+    
+    
+}
+nav{
+    left: 5vw;
+    top: 1vh;
+    height: 10vh;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+    background-color: #00505B;
+    border-radius: 20px;
+}
+ul{ 
+    top: 2vh;
+    height: 10;
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around; 
+    align-items: center;
+    position: relative;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+    font-family: 'Roboto', sans-serif;
+}
