@@ -1,0 +1,44 @@
+html, body {
+    min-width: 100vw;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #D1E7E4;
+    overflow: hidden;
+}
+
+#map {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+#tableContainer {
+    position: absolute;
+    top: 15vh;
+    left: 2vw;
+    width: 30vw;
+    height: 70vh;
+    background: #00505b44;
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+#arbreTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#arbreTable th, #arbreTable td {
+    border: 0.1vw solid #ddd;
+    padding: 1vw;
+}
+
+#arbreTable th {
+    background-color: #f2f2f2;
+    text-align: left;
+}

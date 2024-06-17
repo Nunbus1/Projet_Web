@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/map.css" />
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../../js/map.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+          <ul>
+            <a href="home.html" data-anchor="accueil">Accueil</a>
+            <a href="form.html" data-anchor="add">Ajout d'arbre</a>
+            <a href="map.html" data-anchor="visualisation">Visualisation</a>
+          </ul>
+          <ul>
+            <div class="progress-bar"></div>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <div id="map"></div>
+        <div id="tableContainer">
+            <h2>Détails des Arbres</h2>
+            <table id="arbreTable">
+                <thead>
+                    <tr>
+                        <th>Espèce</th>
+                        <th>Hauteur</th>
+                        <th>Diamètre</th>
+                        <th>Remarquable</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chêne</td>
+                        <td>20</td>
+                        <td>100</td>
+                        <td>Oui</td>
+                        <td>49.8486</td>
+                        <td>3.2875</td>
+                    </tr>
+                    <!-- Ajouter d'autres lignes pour les autres arbres -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer">
+          Projet Web - Trinôme 2 | Groupe 1
+          <br />
+          Chapon Pier, Cordonnier Clara, Dutournier Vincent
+        </p>
+        <img src="../image/isen.jpg" alt="" />
+    </footer>
+</body>
+</html>
