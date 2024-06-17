@@ -141,6 +141,8 @@ main {
     animation: leftToRight 20s 15s linear infinite;
   }
 
+
+
   @keyframes leftToRight {
     0% {
       margin-left: -20vw;
@@ -152,3 +154,109 @@ main {
       margin-left: 120vw;
     }
   }
+
+  @keyframes RightToleft {
+    0% {
+      margin-right: -20vw;
+    }
+    50% {
+      margin-right: 50%;
+    }
+    100% {
+      margin-right: 120vw;
+    }
+  }
+
+
+  .car {
+    overflow: hidden;
+    font-size: 40px;
+    padding-top: 7vh;
+    height: 10vh;
+    left: -20vh;
+    width: 120vw;
+  }
+  
+  .car .car1 {
+    position: relative;
+    display: inline-block;
+    animation: linear infinite;
+    animation-name: run;
+    animation-duration: 25s;
+  }
+  .car .car2 {
+    position: relative;
+    display: inline-block;
+    animation: linear infinite;
+    animation-name: run2;
+    top: 3vh;
+    animation-duration: 30s;
+  }
+
+  .car .car3 {
+    position: relative;
+    display: inline-block;
+    animation: run2 20s 2s linear infinite;
+    top: 3vh;
+  }
+
+  .car .car4 {
+    position: relative;
+    display: inline-block;
+    animation: run2 23s 10s linear infinite;
+    top: 3vh;
+  }
+  .car .car5 {
+    position: relative;
+    display: inline-block;
+    animation: run 20s 5s linear infinite;
+  }
+  .car .car6 {
+    position: relative;
+    display: inline-block;
+    animation: run 17s 20s linear infinite;
+  }
+  .car .car7 {
+    position: relative;
+    display: inline-block;
+    animation: run 18s 19s linear infinite;
+  }
+  .car .car8 {
+    position: relative;
+    display: inline-block;
+    animation: run2 20s 15s linear infinite;
+    top: 3vh;
+  }
+  .car .car9 {
+    position: relative;
+    display: inline-block;
+    animation: run2 23s 17s linear infinite;
+    top: 3vh;
+  }
+  
+  
+  @keyframes run {
+    0% {
+      transform: rotateY(180deg);
+      left: -10vw;
+    }
+    50% {
+        transform: rotateY(180deg);
+      left: 50vw;
+    }
+    100% {
+        transform: rotateY(180deg);
+      left: 110vw;
+    }
+  }
+    @keyframes run2 {
+        0% {
+          left: 110vw;
+        }
+        50% {
+          left: 50vw;
+        }
+        100% {
+          left: -10vw;
+        }
+}
