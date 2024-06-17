@@ -9,19 +9,19 @@
     <link rel="stylesheet" href="../css/form.css">
 </head>
 <body>
+    <header>
+        <nav>
+            <ul>
+                <a href="" data-anchor="accueil">Accueil</a>
+                <a href="" data-anchor="add">Ajout d'arbre</a>
+                <a href="" data-anchor="visualisation">Visualisation</a>
+            </ul>
+            <ul>
+                <div class="progress-bar"></div>
+            </ul>
+        </nav>
+    </header>
     <div class="container">
-        <header>
-            <nav>
-                <ul>
-                    <a href="" data-anchor="accueil">Accueil</a>
-                    <a href="" data-anchor="add">Ajout d'arbre</a>
-                    <a href="" data-anchor="visualisation">Visualisation</a>
-                </ul>
-                <ul>
-                    <div class="progress-bar">1</div>
-                </ul>
-             </nav>
-        </header>
         <main>
             <h1>Ajout d'un nouvel arbre dans la base de données</h1>
             <form action="#" method="post">
@@ -32,15 +32,15 @@
                 <div class="form-group-row">
                     <div class="form-group">
                         <label for="haut_tronc">Hauteur du tronc</label>
-                        <input type="number" id="haut_tronc" name="haut_tronc" value="0">
+                        <input type="number" id="haut_tronc" name="haut_tronc" value="0" min="0" max="à definir">
                     </div>
                     <div class="form-group">
                         <label for="tronc_diam">Diamètre du tronc</label>
-                        <input type="number" id="tronc_diam" name="tronc_diam" value="0">
+                        <input type="number" id="tronc_diam" name="tronc_diam" value="0" min="0" max="à definir">
                     </div>
                     <div class="form-group">
                         <label for="haut_tot">Hauteur totale</label>
-                        <input type="number" id="haut_tot" name="haut_tot" value="0">
+                        <input type="number" id="haut_tot" name="haut_tot" value="0" max="à definir">
                     </div>
                 </div>
                 <div class="form-group">
