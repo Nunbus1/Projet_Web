@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajout d'arbres</title>
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/form.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <a href="" data-anchor="accueil">Accueil</a>
+                    <a href="" data-anchor="add">Ajout d'arbre</a>
+                    <a href="" data-anchor="visualisation">Visualisation</a>
+                </ul>
+                <ul>
+                    <div class="progress-bar">1</div>
+                </ul>
+             </nav>
+        </header>
+        <main>
+            <h1>Ajout d'un nouvel arbre dans la base de données</h1>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="fk_nomtech">Espèce</label>
+                    <input type="text" id="fk_nomtech" name="fk_nomtech" placeholder="Choisissez l'espèce de l'arbre">
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="haut_tronc">Hauteur du tronc</label>
+                        <input type="number" id="haut_tronc" name="haut_tronc" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="tronc_diam">Diamètre du tronc</label>
+                        <input type="number" id="tronc_diam" name="tronc_diam" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="haut_tot">Hauteur totale</label>
+                        <input type="number" id="haut_tot" name="haut_tot" value="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="remarquable">
+                        <input type="radio" id="remarquable" name="remarquable"> Remarquable
+                    </label>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="latitude">Latitude</label>
+                        <input type="number" id="latitude" name="latitude" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude">Longitude</label>
+                        <input type="number" id="longitude" name="longitude" value="0">
+                    </div>
+                </div>
+                <div class="form-group-row">
+                     <div class="form-group">
+                        <label for="fk_arb_etat">État de l'arbre</label>
+                        <select id="fk_arb_etat" name="fk_arb_etat">
+                            <option value="en_place">En place</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fk_stadedev">Stade de développement</label>
+                        <select id="fk_stadedev" name="fk_stadedev">
+                            <option value="jeune">Jeune</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="fk_port">Type de port</label>
+                        <select id="fk_port" name="fk_port">
+                            <option value="libre">Libre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fk_pied">Type de pied</label>
+                        <select id="fk_pied" name="fk_pied">
+                            <option value="gazon">Gazon</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit">Envoyer</button>
+            </form>
+        </main>
+        <footer>
+            <p class="footer">
+                Projet Web - Trinôme 2 | Groupe 1
+                <br />
+                Chapon Pier, Cordonnier Clara, Dutournier Vincent
+            </p>
+            <img src="../image/isen.jpg" alt="" />
+        </footer>
+    </div>
+</body>
+</html>
