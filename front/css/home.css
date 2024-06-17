@@ -1,4 +1,4 @@
-html, body{
+html, body {
     min-width: 100vw;
     height: auto;
     margin: 0;
@@ -6,6 +6,7 @@ html, body{
     display: flex;
     flex-direction: column;
     background-color: #D1E7E4;
+    overflow: hidden;
 }
 
 /* * {
@@ -13,9 +14,16 @@ html, body{
     padding: 0;
     box-shadow: 0 0 0 3px red inset;
 }  */
-main{
-    background-image: url("../img/patate.jpg");
-    height: 80vh;
+
+main {
+    background-image: url("../image/background.png");
+    background-size: contain;
+    background-repeat: repeat-x;
+    background-attachment: relative;
+    background-position: bottom;
+    /* background-position-y: -5vh; */
+    width: 100vw;
+    height: 75vh;
     display: flex;
     padding-top: 5vh;
     flex-direction: column;
@@ -25,18 +33,28 @@ main{
     gap: 7vh;
 }
 
-.title{
+.title {
     font-size: 2.5rem;
     font-weight: bold;
     color: #00505B;
     text-align: center;
-
+    z-index: 2;
 }
 
-.pres{
+.pres {
     width: 50vw;
+    height: 20vh;
     text-align: center;
+    color: #FFFFFF;
+    background-color: #00505b52; 
+    backdrop-filter: blur(10px); 
+    border-radius: 20px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2vh; 
 }
+
 
 .comic-button {
     display: inline-block;
@@ -52,18 +70,85 @@ main{
     box-shadow: 5px 5px 0px #000;
     transition: all 0.3s ease;
     cursor: pointer;
-  }
+}
   
-  .comic-button:hover {
+.comic-button:hover {
     background-color: #fff;
     color: #00505B;
     border: 2px solid #00505B;
     box-shadow: 5px 5px 0px #00505B;
-  }
+}
   
-  .comic-button:active {
+.comic-button:active {
     background-color: #fcf414;
     box-shadow: none;
     transform: translateY(4px);
+}
+
+
+.cloud {
+    align-self: flex-start;
+    width: 12vw;
+    height: 9vh;
+    background-color: white;
+    border-radius: 4rem;
+    margin-top: 1vh;
+    margin-left: -20vw;
+    position: absolute;
+    z-index: 0;
+    box-shadow: 1px 2px 2px 0px rgb(0 0 0 / 18%);
+    &::before,
+    &::after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      background-color: inherit;
+      border-radius: 50%;
+    }
+    &::before {
+      top: -40%;
+      left: 15%;
+      width: 8vmin;
+      height: 8vmin;
+      transform: rotate(-45deg);
+    }
+    &::after {
+      bottom: 30%;
+      right: 15%;
+      width: 13vmin;
+      height: 13vmin;
+      transform: rotate(-45deg);
+    }
   }
-  
+  .cloud0 {
+    margin-top: -2vh;
+    animation: leftToRight 20s linear infinite;
+  }
+  .cloud1 {
+    margin-top: 10vh;
+    animation: leftToRight 20s 7s linear infinite;
+  }
+  .cloud2 { 
+    margin-top: 25vh;
+    animation: leftToRight 20s 3s linear infinite;
+  }
+  .cloud3 { 
+    margin-top: 2vh;
+    animation: leftToRight 20s 11s linear infinite;
+  }
+  .cloud4 { 
+    margin-top: 21vh;
+    animation: leftToRight 20s 15s linear infinite;
+  }
+
+  @keyframes leftToRight {
+    0% {
+      margin-left: -20vw;
+    }
+    50% {
+      margin-left: 50%;
+    }
+    100% {
+      margin-left: 120vw;
+    }
+  }
