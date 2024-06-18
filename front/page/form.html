@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajout d'arbres</title>
+    <script src="C:/Users/Utilisateur/Documents/Cours/Projets A3/Web/GitHub/js/form.js"></script>
     <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/footer.css" />
     <link rel="stylesheet" href="../css/form.css">
@@ -12,19 +13,20 @@
     <header>
         <nav>
             <ul>
-                <a href="" data-anchor="accueil">Accueil</a>
-                <a href="" data-anchor="add">Ajout d'arbre</a>
-                <a href="" data-anchor="visualisation">Visualisation</a>
+          <a href="home.html" data-anchor="accueil">Accueil</a>
+          <a href="form.html" data-anchor="add">Ajout d'arbre</a>
+          <a href="map.html" data-anchor="visualisation">Visualisation</a>
             </ul>
             <ul>
                 <div class="progress-bar"></div>
             </ul>
         </nav>
     </header>
+    <br>
     <div class="container">
         <main>
             <h1>Ajout d'un nouvel arbre dans la base de données</h1>
-            <form action="#" method="post">
+            <form name="myForm"action="#" method="post" onsubmit="return validateForm()">
                 <div class="form-group">
                     <label for="fk_nomtech">Espèce</label>
                     <input type="text" id="fk_nomtech" name="fk_nomtech" placeholder="Choisissez l'espèce de l'arbre">
@@ -86,17 +88,18 @@
                         </select>
                     </div>
                 </div>
-                <button type="submit">Envoyer</button>
+                <button class="comic-button" type="submit">Ajouter</button>
             </form>
         </main>
-        <footer>
-            <p class="footer">
-                Projet Web - Trinôme 2 | Groupe 1
-                <br />
-                Chapon Pier, Cordonnier Clara, Dutournier Vincent
-            </p>
-            <img src="../image/isen.jpg" alt="" />
-        </footer>
+        <br><br><br><br>
     </div>
+    <footer>
+        <p class="footer">
+            Projet Web - Trinôme 2 | Groupe 1
+            <br />
+            Chapon Pier, Cordonnier Clara, Dutournier Vincent
+        </p>
+        <img src="../image/isen.jpg" alt="" />
+    </footer>
 </body>
 </html>

@@ -8,23 +8,6 @@ html, body{
     background-color: #D1E7E4;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
 main {
     background-color: #ffffff;
     border-radius: 8px;
@@ -112,86 +95,31 @@ form {
     font-weight: bold;
 }
 
-
-
-main {
-    background-color: #ffffff;
-    border-radius: 8px;
-    max-width: 800px;
-    margin: 20px auto; /* Ajuste la marge pour centrer */
-    padding: 20px;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px; /* Espacement sous le titre */
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.form-group, .form-group-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.form-group-row {
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-}
-
-.form-group {
-    max-width: 400px; /* Taille maximale des groupes */
-    margin-bottom: 10px; /* Espacement entre les groupes */
-}
-
-.form-group label {
-    margin-bottom: 5px;
+.comic-button {
+    display: inline-block;
+    padding: 2vh 1vw;
+    font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
-    width: 100%;
-}
-
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group select {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: center;
-}
-
-.form-group-checkbox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.form-group-checkbox label {
-    font-weight: bold;
-}
-
-button {
-    padding: 10px;
-    background-color: #005f61;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #00505B;
+    border: 0.3vh solid #000;
+    border-radius: 2vh;
+    box-shadow: 5px 5px 0px #000;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
-
-button:hover {
-    background-color: #004749;
+  
+.comic-button:hover {
+    background-color: #fff;
+    color: #00505B;
+    border: 2px solid #00505B;
+    box-shadow: 5px 5px 0px #00505B;
+}
+  
+.comic-button:active {
+    background-color: #fcf414;
+    box-shadow: none;
+    transform: translateY(4px);
 }
