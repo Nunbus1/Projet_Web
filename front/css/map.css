@@ -83,3 +83,16 @@ html, body {
     cursor: pointer; /* Changer le curseur pour indiquer que c'est draggable */
     user-select: none;
 }
+
+  .details-arbres-buttons button {
+    padding: 8px 12px;
+    background-color: #00505B;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .details-arbres-buttons button:hover {
+    background-color: #fff;
+    color: #00505B;
+  }
