@@ -6,14 +6,15 @@ html, body{
     display: flex;
     flex-direction: column;
     background-color: #D1E7E4;
+    overflow-x: hidden;
 }
 
 main {
     background-color: #ffffff;
     border-radius: 8px;
-    max-width: 800px;
+    max-width: 80vw;
     margin: 0 auto;
-    padding: 20px;
+    padding: 2vh;
 }
 
 h1 {
@@ -25,7 +26,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 2vh;
 }
 
 .form-group, .form-group-row {
@@ -38,16 +39,16 @@ form {
 .form-group-row {
     flex-direction: row;
     justify-content: center;
-    gap: 10px;
+    gap: 2vw;
 }
 
 .form-group {
     width: 100%;
-    max-width: 400px; /* Taille maximale des groupes */
+    max-width: 50vw; /* Taille maximale des groupes */
 }
 
 .form-group label {
-    margin-bottom: 5px;
+    margin-bottom: 1vh;
     font-weight: bold;
     text-align: center; /* Centrer les titres des champs */
     width: 100%;
@@ -55,8 +56,8 @@ form {
 
 .form-group input[type="text"] {
     width: 100%;
-    max-width: 300px;
-    padding: 10px;
+    max-width: 37.5vw; /* 300px en unités relatives (environ) */
+    padding: 1vh;
     border: 1px solid #ccc;
     border-radius: 4px;
     text-align: center;
@@ -64,21 +65,21 @@ form {
 
 .form-group input[type="number"] {
     width: 100%;
-    max-width: 150px;
-    padding: 10px;
+    max-width: 18.75vw; /* 150px en unités relatives (environ) */
+    padding: 1vh;
     border: 1px solid #ccc;
     border-radius: 4px;
     text-align: center;
 }
 
 .form-group input[type="checkbox"] {
-    margin-right: 5px;
+    margin-right: 0.5vw;
 }
 
 .form-group select {
     width: 100%;
-    max-width: 300px;
-    padding: 10px;
+    max-width: 37.5vw; /* 300px en unités relatives (environ) */
+    padding: 1vh;
     border: 1px solid #ccc;
     border-radius: 4px;
     text-align: center;
@@ -94,6 +95,8 @@ form {
 .form-group-checkbox label {
     font-weight: bold;
 }
+
+
 
 .comic-button {
     display: inline-block;
@@ -123,3 +126,4 @@ form {
     box-shadow: none;
     transform: translateY(4px);
 }
+
