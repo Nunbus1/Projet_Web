@@ -1,6 +1,6 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", function () {
-  // Exemple de données statiques pour Saint-Quentin  
+  // Exemple de données statiques pour Saint-Quentin
   var data = [
     {
       type: "scattermapbox",
@@ -58,4 +58,60 @@ document.addEventListener("DOMContentLoaded", function () {
     mapboxAccessToken:
       "pk.eyJ1IjoibnVuYnVzIiwiYSI6ImNseGppanZjdDFxdGoyanFwaG4wNjVtaG4ifQ.BXNSajM0Roj6pVMoUZc39A",
   });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  var tableContainer = document.getElementById("tableContainer");
+  var treeContainer = document.getElementById("treeContainer");
+  var tree = document.getElementById("tree");
+  var trail = document.getElementById("trail");
+  var isDragging = false;
+  var startX, scrollLeft;
+
+  function updateTreeContainerWidth() {
+    treeContainer.style.width = tableContainer.scrollWidth + "px";
+  }
+
+  function updateTreePosition() {
+    var scrollPercentage =
+      tableContainer.scrollLeft /
+      (tableContainer.scrollWidth - tableContainer.clientWidth);
+    var treePosition =
+      scrollPercentage * (tableContainer.scrollWidth - tree.clientWidth);
+    tree.style.left = treePosition + "px";
+    trail.style.width = treePosition + tree.clientWidth / 2 + "px";
+  }
+
+  // Mettre à jour la largeur de treeContainer et la position de l'émote en fonction du défilement
+  tableContainer.addEventListener("scroll", updateTreePosition);
+  window.addEventListener("resize", updateTreeContainerWidth);
+  updateTreeContainerWidth();
+
+  // Ajouter des événements de drag pour l'émote
+  tree.addEventListener("mousedown", function (e) {
+    isDragging = true;
+    startX = e.pageX - tree.offsetLeft;
+    scrollLeft = tableContainer.scrollLeft;
+    document.body.style.cursor = "grabbing";
+  });
+
+  document.addEventListener("mouseup", function () {
+    isDragging = false;
+    document.body.style.cursor = "default";
+  });
+
+  document.addEventListener("mousemove", function (e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    var x = e.pageX - treeContainer.offsetLeft;
+    var walk = x - startX;
+    var scrollPercentage =
+      walk / (treeContainer.scrollWidth - tree.clientWidth);
+    tableContainer.scrollLeft =
+      scrollPercentage *
+      (tableContainer.scrollWidth - tableContainer.clientWidth);
+  });
+
+  // Initial update of tree position
+  updateTreePosition();
 });

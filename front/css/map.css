@@ -9,7 +9,6 @@ html, body {
     overflow: hidden;
 }
 
-
 #map {
     height: 100vh;
     width: 100%;
@@ -27,6 +26,13 @@ html, body {
     padding: 20px;
     border-radius: 10px;
     overflow-y: auto;
+    overflow-x: auto; /* Garder le défilement horizontal */
+    margin: auto;
+}
+
+/* Masquer la scrollbar par défaut */
+#tableContainer::-webkit-scrollbar {
+    display: none;
 }
 
 #arbreTable {
@@ -42,4 +48,38 @@ html, body {
 #arbreTable th {
     background-color: #f2f2f2;
     text-align: left;
+}
+
+/* Conteneur de l'émote d'arbre en mouvement */
+#treeContainer {
+    position: absolute;
+    bottom: 1vh;
+    left: 0;
+    width: 100%;
+    height: 4vh; /* Hauteur de l'émote */
+    background: rgb(3, 171, 3);
+    border-radius: 20px;
+    z-index: 2;
+    overflow: hidden; /* Cache les parties débordantes de l'émote */
+}
+
+#trail {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 1vh; /* Hauteur de la traînée */
+    background: #5a4b19; /* Couleur verte pour la traînée */
+    z-index: -1; /* Derrière l'émote d'arbre */
+    width: 0;
+}
+
+/* Emote d'arbre */
+#tree {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    font-size: 4vmin; /* Taille de l'émote */
+    cursor: pointer; /* Changer le curseur pour indiquer que c'est draggable */
+    user-select: none;
 }
