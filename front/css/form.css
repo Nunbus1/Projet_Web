@@ -96,8 +96,6 @@ form {
     font-weight: bold;
 }
 
-
-
 .comic-button {
     display: inline-block;
     padding: 2vh 1vw;
@@ -127,3 +125,42 @@ form {
     transform: translateY(4px);
 }
 
+/* Masquer la scrollbar par défaut */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Conteneur de l'émote d'arbre en mouvement */
+#treeContainer {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 4vh; /* Largeur de l'émote */
+    height: 100vh; /* Hauteur de la scrollbar */
+    background: transparent;
+    z-index: 2;
+    overflow: hidden; /* Cache les parties débordantes de l'émote */
+    pointer-events: none; /* Désactiver les événements sur le conteneur */
+}
+
+#trail {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 1vh; /* Largeur de la traînée */
+    background: #5a4b19; /* Couleur verte pour la traînée */
+    z-index: -1; /* Derrière l'émote d'arbre */
+    height: 0;
+}
+
+/* Emote d'arbre */
+#tree {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    font-size: 5vmin; /* Taille de l'émote */
+    cursor: pointer; /* Changer le curseur pour indiquer que c'est draggable */
+    user-select: none;
+    pointer-events: auto; /* Activer les événements sur l'émote */
+}
