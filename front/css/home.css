@@ -9,19 +9,12 @@ html, body {
     overflow: hidden;
 }
 
-/* * {
-    margin: 0;
-    padding: 0;
-    box-shadow: 0 0 0 3px red inset;
-}  */
-
 main {
     background-image: url("../image/background.png");
     background-size: contain;
     background-repeat: repeat-x;
     background-attachment: relative;
     background-position: bottom;
-    /* background-position-y: -5vh; */
     width: 100vw;
     height: 75vh;
     display: flex;
@@ -31,6 +24,7 @@ main {
     align-items: center;
     margin-top: 1vh;
     gap: 7vh;
+    position: relative; /* Ajouté pour positionner les voitures par rapport à main */
 }
 
 .title {
@@ -54,7 +48,6 @@ main {
     align-items: center;
     padding: 2vh; 
 }
-
 
 .comic-button {
     display: inline-block;
@@ -85,7 +78,6 @@ main {
     transform: translateY(4px);
 }
 
-
 .cloud {
     align-self: flex-start;
     width: 12vw;
@@ -97,53 +89,51 @@ main {
     position: absolute;
     z-index: 0;
     box-shadow: 1px 2px 2px 0px rgb(0 0 0 / 18%);
-    &::before,
-    &::after {
-      content: "";
-      display: inline-block;
-      position: absolute;
-      background-color: inherit;
-      border-radius: 50%;
-    }
-    &::before {
-      top: -40%;
-      left: 15%;
-      width: 8vmin;
-      height: 8vmin;
-      transform: rotate(-45deg);
-    }
-    &::after {
-      bottom: 30%;
-      right: 15%;
-      width: 13vmin;
-      height: 13vmin;
-      transform: rotate(-45deg);
-    }
-  }
-  .cloud0 {
+}
+.cloud::before,
+.cloud::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    background-color: inherit;
+    border-radius: 50%;
+}
+.cloud::before {
+    top: -40%;
+    left: 15%;
+    width: 8vmin;
+    height: 8vmin;
+    transform: rotate(-45deg);
+}
+.cloud::after {
+    bottom: 30%;
+    right: 15%;
+    width: 13vmin;
+    height: 13vmin;
+    transform: rotate(-45deg);
+}
+.cloud0 {
     margin-top: -2vh;
     animation: leftToRight 20s linear infinite;
-  }
-  .cloud1 {
+}
+.cloud1 {
     margin-top: 10vh;
     animation: leftToRight 20s 7s linear infinite;
-  }
-  .cloud2 { 
+}
+.cloud2 { 
     margin-top: 25vh;
     animation: leftToRight 20s 3s linear infinite;
-  }
-  .cloud3 { 
+}
+.cloud3 { 
     margin-top: 2vh;
     animation: leftToRight 20s 11s linear infinite;
-  }
-  .cloud4 { 
+}
+.cloud4 { 
     margin-top: 21vh;
     animation: leftToRight 20s 15s linear infinite;
-  }
+}
 
-
-
-  @keyframes leftToRight {
+@keyframes leftToRight {
     0% {
       margin-left: -20vw;
     }
@@ -153,110 +143,62 @@ main {
     100% {
       margin-left: 120vw;
     }
-  }
+}
 
-  @keyframes RightToleft {
-    0% {
-      margin-right: -20vw;
-    }
-    50% {
-      margin-right: 50%;
-    }
-    100% {
-      margin-right: 120vw;
-    }
-  }
-
-
-  .car {
+.car {
     overflow: hidden;
     font-size: 40px;
-    padding-top: 7vh;
     height: 10vh;
-    left: -20vh;
-    width: 120vw;
-  }
-  
-  .car .car1 {
-    position: relative;
+    width: 100vw;
+    position: absolute;
+    bottom: 1.3vh; /* Positionner les voitures au bas du conteneur main */
+    left: 0; /* S'assurer que les voitures commencent à gauche */
+}
+
+.car .car1,
+.car .car2,
+.car .car3,
+.car .car4,
+.car .car5,
+.car .car6,
+.car .car7,
+.car .car8,
+.car .car9 {
+    position: absolute;
     display: inline-block;
-    animation: linear infinite;
-    animation-name: run;
-    animation-duration: 25s;
-  }
-  .car .car2 {
-    position: relative;
-    display: inline-block;
-    animation: linear infinite;
+    animation: run 25s linear infinite;
+    
+}
+
+.car .car2,
+.car .car3,
+.car .car4,
+.car .car8,
+.car .car9 {
+    
     animation-name: run2;
-    top: 3vh;
-    animation-duration: 30s;
-  }
+}
 
-  .car .car3 {
-    position: relative;
-    display: inline-block;
-    animation: run2 20s 2s linear infinite;
-    top: 3vh;
-  }
+.car .car2 { animation-duration: 30s; top: 3vh; }
+.car .car3 { animation-duration: 20s; animation-delay: 2s; top: 3vh; }
+.car .car4 { animation-duration: 23s; animation-delay: 10s; top: 3vh; }
+.car .car5 { animation-duration: 20s; animation-delay: 5s; }
+.car .car6 { animation-duration: 17s; animation-delay: 20s; }
+.car .car7 { animation-duration: 18s; animation-delay: 19s; }
+.car .car8 { animation-duration: 20s; animation-delay: 15s; top: 3vh; }
+.car .car9 { animation-duration: 23s; animation-delay: 17s; top: 3vh; }
 
-  .car .car4 {
-    position: relative;
-    display: inline-block;
-    animation: run2 23s 10s linear infinite;
-    top: 3vh;
-  }
-  .car .car5 {
-    position: relative;
-    display: inline-block;
-    animation: run 20s 5s linear infinite;
-  }
-  .car .car6 {
-    position: relative;
-    display: inline-block;
-    animation: run 17s 20s linear infinite;
-  }
-  .car .car7 {
-    position: relative;
-    display: inline-block;
-    animation: run 18s 19s linear infinite;
-  }
-  .car .car8 {
-    position: relative;
-    display: inline-block;
-    animation: run2 20s 15s linear infinite;
-    top: 3vh;
-  }
-  .car .car9 {
-    position: relative;
-    display: inline-block;
-    animation: run2 23s 17s linear infinite;
-    top: 3vh;
-  }
-  
-  
-  @keyframes run {
-    0% {
-      transform: rotateY(180deg);
-      left: -10vw;
-    }
-    50% {
-        transform: rotateY(180deg);
-      left: 50vw;
-    }
-    100% {
-        transform: rotateY(180deg);
-      left: 110vw;
-    }
-  }
-    @keyframes run2 {
-        0% {
-          left: 110vw;
-        }
-        50% {
-          left: 50vw;
-        }
-        100% {
-          left: -10vw;
-        }
+@keyframes run {
+    0% { left: -10vw; 
+        transform: rotateY(180deg);}
+    50% { left: 50vw; 
+        transform: rotateY(180deg);}
+    100% { left: 110vw; 
+        transform: rotateY(180deg);}
+}
+
+@keyframes run2 {
+    0% { left: 110vw; }
+    50% { left: 50vw; }
+    100% { left: -10vw; }
 }
