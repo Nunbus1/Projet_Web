@@ -1,6 +1,6 @@
-html, body{
+html, body {
     min-width: 100vw;
-    height: auto;
+    height: 100%;
     margin: 0;
     padding: 0;
     display: flex;
@@ -8,17 +8,38 @@ html, body{
     background-color: #D1E7E4;
 }
 
+.container {
+    flex: 1; /* Utilisation de flex pour que le contenu s'étende */
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    overflow: hidden; /* Empêche le dépassement du contenu */
+    position: relative; /* Position relative pour le contenu */
+    z-index: 0; /* Z-index inférieur à celui du header */
+}
+
+main {
+    z-index: 2; /* Assure que le contenu principal est au-dessus de l'image */
+}
+
+h1{
+	text-align: center;
+	color: #00505B;
+	    z-index: 4; /* Texte au-dessus de l'image */
+
+}
+
 .image-container {
-    position: absolute;
+    position: absolute; /* Position absolue pour l'image de l'arbre */
     top: 0;
     left: 0;
-    height: 100vh;
-    width: auto;
-    z-index: -1; /* Pour que l'image soit en arrière-plan, si besoin */
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Empêche le dépassement de l'image */
 }
 
 .image-container img {
-    height: 100vh;
+    height: 100%;
     width: auto;
     object-fit: cover;
     display: block;
