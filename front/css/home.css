@@ -149,10 +149,10 @@ main {
     overflow: hidden;
     font-size: 40px;
     height: 10vh;
-    width: 100vw;
+    width: 110vw;
     position: absolute;
     bottom: 1.3vh; /* Positionner les voitures au bas du conteneur main */
-    left: 0; /* S'assurer que les voitures commencent à gauche */
+    left: -10vh; /* S'assurer que les voitures commencent à gauche */
 }
 
 .car .car1,
