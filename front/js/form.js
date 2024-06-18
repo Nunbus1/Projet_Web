@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateTreePosition() {
     var scrollPercentage =
-      (html.scrollTop + 3 || body.scrollTop) /
-      (body.scrollHeight - html.clientHeight + 5);
+      (html.scrollTop + 20 || body.scrollTop) /
+      (body.scrollHeight - html.clientHeight + 25);
     var treePosition =
       scrollPercentage * (treeContainer.clientHeight - tree.clientHeight);
     tree.style.top = treePosition + "px";
