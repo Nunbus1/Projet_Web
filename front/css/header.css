@@ -1,9 +1,8 @@
 header{
     height: 11vh;
-    
+    position: relative;
     display: flex;
     flex-direction: row;
-    
     
 }
 nav{
