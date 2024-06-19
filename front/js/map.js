@@ -30,9 +30,10 @@ document.addEventListener("DOMContentLoaded", function () {
       mode: "markers",
       marker: {
         size: 14,
-        color: "fuchsia",
+        color: arbre.remarquable ? "green" : "fuchsia",
       },
       text: [arbre.nom],
+      customdata: [arbre.id_arbre],
     }));
 
     // Configuration du layout de la carte avec couches de trafic
@@ -88,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
     arbres.slice(0, 5).forEach((arbre) => {
       const row = document.createElement("tr");
       row.innerHTML = `
+        <td><input type="checkbox"></td>
         <td>${arbre.nom}</td>
         <td>${arbre.haut_tot}</td>
         <td>${arbre.tronc_diam}</td>
@@ -98,6 +100,15 @@ document.addEventListener("DOMContentLoaded", function () {
       tableBody.appendChild(row);
     });
   }
+  document.querySelectorAll(".arbre-checkbox").forEach((checkbox) => {
+    checkbox.addEventListener("change", function (event) {
+      const arbreIndex = event.target.dataset.index;
+      data[arbreIndex].marker.color = event.target.checked
+        ? "green"
+        : "fuchsia";
+      Plotly.newPlot("map", data, layout);
+    });
+  });
 
   // Fonction pour configurer la pagination
   function setupPagination(arbres) {
@@ -114,6 +125,21 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       pagination.appendChild(pageLink);
     }
+    function setupCheckboxEventListeners() {
+      const checkboxes = document.querySelectorAll(
+        "#arbreTable input[type='checkbox']"
+      );
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          const row = this.closest("tr");
+          if (this.checked) {
+            row.style.backgroundColor = "lightgreen";
+          } else {
+            row.style.backgroundColor = "";
+          }
+        });
+      });
+    }
 
     function displayPage(page) {
       const start = (page - 1) * itemsPerPage;
@@ -124,6 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
       pageArbres.forEach((arbre) => {
         const row = document.createElement("tr");
         row.innerHTML = `
+          <td><input type="checkbox"></td>
           <td>${arbre.nom}</td>
           <td>${arbre.haut_tot}</td>
           <td>${arbre.tronc_diam}</td>
@@ -134,6 +161,16 @@ document.addEventListener("DOMContentLoaded", function () {
         tableBody.appendChild(row);
       });
     }
+    // Ajouter des écouteurs d'événements aux cases à cocher
+    document.querySelectorAll(".arbre-checkbox").forEach((checkbox) => {
+      checkbox.addEventListener("change", function (event) {
+        const arbreIndex = event.target.dataset.index;
+        data[arbreIndex].marker.color = event.target.checked
+          ? "green"
+          : "fuchsia";
+        Plotly.react("map", data, layout); // Mettre à jour la carte
+      });
+    });
 
     // Afficher la première page par défaut
     displayPage(1);
