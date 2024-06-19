@@ -115,3 +115,33 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial update of tree position
   updateTreePosition();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("../../back/php/map.php?action=getArbres")
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success === false) {
+        console.error("Error fetching data: ", data.error);
+        return;
+      }
+
+      const tableBody = document.querySelector("#arbreTable tbody");
+      tableBody.innerHTML = ""; // Clear existing rows
+
+      data.arbres.forEach((arbre) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+              <td>${arbre.nom}</td>
+              <td>${arbre.haut_tot}</td>
+              <td>${arbre.tronc_diam}</td>
+              <td>${arbre.remarquable ? "Oui" : "Non"}</td>
+              <td>${arbre.latitude}</td>
+              <td>${arbre.longitude}</td>
+          `;
+        tableBody.appendChild(row);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching data: ", error);
+    });
+});
