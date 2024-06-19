@@ -1,11 +1,4 @@
 <?php
-// Afficher toutes les erreurs PHP
-
-echo "PHP is working!";
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -21,21 +14,26 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Vérifier la connexion
 if ($conn->connect_error) {
-    die(json_encode(["success" => false, "error" => "Connection failed: " . $conn->connect_error]));
+    die("Connection failed: " . $conn->connect_error);
 }
 
-$response = [];
-$sql = "SELECT nom.nom, arbre.haut_tot, arbre.tronc_diam, arbre.remarquable, arbre.latitude, arbre.longitude FROM arbre JOIN nom ON arbre.id_arbre = nom.id_arbre";
-$result = $conn->query($sql);
+$action = isset($_GET['action']) ? $_GET['action'] : '';
 
-if ($result) {
-    $response['arbres'] = [];
-    while ($row = $result->fetch_assoc()) {
-        $response['arbres'][] = $row;
+if ($action == 'getArbres') {
+    $sql = "SELECT a.latitude, a.longitude, a.haut_tot, a.tronc_diam, a.remarquable, n.nom
+            FROM arbre a
+            JOIN nom n ON a.id_arbre = n.id_arbre";
+    $result = $conn->query($sql);
+
+    $arbres = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $arbres[] = $row;
+        }
     }
-    echo json_encode($response);
+    echo json_encode($arbres);
 } else {
-    echo json_encode(["success" => false, "error" => $conn->error]);
+    echo json_encode(['error' => 'Action non supportée']);
 }
 
 $conn->close();
