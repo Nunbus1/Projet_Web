@@ -16,12 +16,11 @@ $(document).ready(function() {
         dataType: 'json',
         encode: true
     }).done(function(data) {
-        fillSelectFields(data); // Appel de la fonction pour remplir les champs de sélection
+        fillSelectFields(data); 
     }).fail(function(xhr, status, error) {
         alert('Erreur lors de la récupération des données.');
     });
 
-    // Soumission du formulaire via AJAX
     $('#myForm').submit(function(event) {
         event.preventDefault(); // Empêche le rechargement de la page
 
@@ -40,7 +39,6 @@ $(document).ready(function() {
             fk_pied: $('#fk_pied').val()
         };
 
-        // Envoie les données du formulaire via AJAX
         $.ajax({
             type: 'POST',
             url: '../../back/php/request.php?action=addArbre',
