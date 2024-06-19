@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/cluster.css" />
+
+    <!-- Script JS -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../js/cluster.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <a href="home.html" data-anchor="accueil">Accueil</a>
+          <a href="form.html" data-anchor="add">Ajout d'arbre</a>
+          <a href="map.html" data-anchor="visualisation">Visualisation</a>
+        </ul>
+        <ul>
+          <div class="progress-bar"></div>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div id="map"></div>
+      <div id="tableContainer">
+        <div id="treeContainer">
+          <div id="trail"></div>
+          <div id="tree">🌸</div>
+        </div>
+        <h2>Cluster</h2>
+        <!-- <table id="arbreTable">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Espèce</th>
+              <th>Hauteur</th>
+              <th>Diamètre</th>
+              <th>Remarquable</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+            </tr>
+          </thead>
+          <tbody>
+          
+          </tbody>
+        </table> -->
+        <div id="pagination">
+          <!-- Les boutons de pagination seront générés par JavaScript -->
+        </div>
+        <br />
+        <div class="details-arbres-buttons">
+          <a href="map.html"><button>Map</button></a>
+          <!-- <a href="age.html"><button>Âge</button></a>
+          <a href="deracinement.html"><button>Déracinement</button></a> -->
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p class="footer">
+        Projet Web - Trinôme 2 | Groupe 1
+        <br />
+        Chapon Pier, Cordonnier Clara, Dutournier Vincent
+      </p>
+      <img src="../image/isen.jpg" alt="" />
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+html, body {
+    min-width: 100vw;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #D1E7E4;
+    overflow: hidden;
+}
+
+#map {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+#tableContainer {
+    position: absolute;
+    top: 15vh;
+    left: 2vw;
+    width: 20vw;
+    height: 70vh;
+    background: #00505b44;
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: auto; /* Garder le défilement horizontal */
+    margin: auto;
+}
+
+/* Masquer la scrollbar par défaut */
+#tableContainer::-webkit-scrollbar {
+    display: none;
+}
+
+#arbreTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#arbreTable th, #arbreTable td {
+    border: 0.1vw solid #ddd;
+    padding: 1vw;
+}
+
+#arbreTable th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+/* Conteneur de l'émote d'arbre en mouvement */
+#treeContainer {
+    position: absolute;
+    bottom: 1vh;
+    left: 0;
+    width: 100%;
+    height: 4vh; /* Hauteur de l'émote */
+    background: rgb(77, 68, 33);
+    border-radius: 20px;
+    z-index: 2;
+    overflow: hidden; /* Cache les parties débordantes de l'émote */
+}
+
+#trail {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 1vh; /* Hauteur de la traînée */
+    background: #369525; /* Couleur verte pour la traînée */
+    z-index: -1; /* Derrière l'émote d'arbre */
+    width: 0;
+}
+
+/* Emote d'arbre */
+#tree {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    font-size: 4vmin; /* Taille de l'émote */
+    cursor: pointer; /* Changer le curseur pour indiquer que c'est draggable */
+    user-select: none;
+}
+
+  .details-arbres-buttons button {
+    padding: 8px 12px;
+    background-color: #00505B;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .details-arbres-buttons button:hover {
+    background-color: #fff;
+    color: #00505B;
+  }
