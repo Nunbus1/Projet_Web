@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajout d'arbres</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/form.js"></script>
     <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/footer.css" />
@@ -13,9 +14,9 @@
     <header>
         <nav>
             <ul>
-          <a href="home.html" data-anchor="accueil">Accueil</a>
-          <a href="form.html" data-anchor="add">Ajout d'arbre</a>
-          <a href="map.html" data-anchor="visualisation">Visualisation</a>
+                <a href="home.html" data-anchor="accueil">Accueil</a>
+                <a href="form.html" data-anchor="add">Ajout d'arbre</a>
+                <a href="map.html" data-anchor="visualisation">Visualisation</a>
             </ul>
             <ul>
                 <div class="progress-bar"></div>
@@ -26,7 +27,7 @@
     <div class="container">
         <main>
             <h1>Ajout d'un nouvel arbre dans la base de données</h1>
-            <form name="myForm"action="#" method="post" onsubmit="return validateForm()">
+            <form name="myForm" id="myForm" method="post">
                 <div class="form-group">
                     <label for="fk_nomtech">Espèce</label>
                     <input type="text" id="fk_nomtech" name="fk_nomtech" placeholder="Choisissez l'espèce de l'arbre">
@@ -34,15 +35,15 @@
                 <div class="form-group-row">
                     <div class="form-group">
                         <label for="haut_tronc">Hauteur du tronc</label>
-                        <input type="number" id="haut_tronc" name="haut_tronc" value="0" min="0" max="à definir">
+                        <input type="number" id="haut_tronc" name="haut_tronc" value="0" min="0">
                     </div>
                     <div class="form-group">
                         <label for="tronc_diam">Diamètre du tronc</label>
-                        <input type="number" id="tronc_diam" name="tronc_diam" value="0" min="0" max="à definir">
+                        <input type="number" id="tronc_diam" name="tronc_diam" value="0" min="0">
                     </div>
                     <div class="form-group">
                         <label for="haut_tot">Hauteur totale</label>
-                        <input type="number" id="haut_tot" name="haut_tot" value="0" max="à definir">
+                        <input type="number" id="haut_tot" name="haut_tot" value="0" min="0">
                     </div>
                 </div>
                 <div class="form-group">
@@ -53,24 +54,24 @@
                 <div class="form-group-row">
                     <div class="form-group">
                         <label for="latitude">Latitude</label>
-                        <input type="number" id="latitude" name="latitude" value="0">
+                        <input type="number" id="latitude" name="latitude" value="0" step="any">
                     </div>
                     <div class="form-group">
                         <label for="longitude">Longitude</label>
-                        <input type="number" id="longitude" name="longitude" value="0">
+                        <input type="number" id="longitude" name="longitude" value="0" step="any">
                     </div>
                 </div>
                 <div class="form-group-row">
-                     <div class="form-group">
+                    <div class="form-group">
                         <label for="fk_arb_etat">État de l'arbre</label>
                         <select id="fk_arb_etat" name="fk_arb_etat">
-                            <option value="en_place">En place</option>
+                            
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="fk_stadedev">Stade de développement</label>
                         <select id="fk_stadedev" name="fk_stadedev">
-                            <option value="jeune">Jeune</option>
+                           
                         </select>
                     </div>
                 </div>
@@ -78,17 +79,16 @@
                     <div class="form-group">
                         <label for="fk_port">Type de port</label>
                         <select id="fk_port" name="fk_port">
-                            <option value="libre">Libre</option>
+                           
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="fk_pied">Type de pied</label>
                         <select id="fk_pied" name="fk_pied">
-                            <option value="gazon">Gazon</option>
                         </select>
                     </div>
                 </div>
-                <button class="comic-button" type="submit" formaction="map.html">Ajouter</button>
+                <button class="comic-button" type="submit">Ajouter</button>
             </form>
         </main>
         <br><br><br><br>

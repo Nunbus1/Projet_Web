@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
@@ -16,6 +16,9 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// Spécifier l'encodage UTF-8 pour la connexion MySQL
+$conn->set_charset("utf8mb4");
 
 // Déterminer quelle action est demandée
 $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -57,46 +60,16 @@ if ($action == 'addArbre') {
 } elseif ($action == 'getFormData') {
     $response = [];
 
-    // Récupérer les données pour le sélecteur 'fk_arb_etat' depuis la table 'etat'
-    $result = $conn->query("SELECT DISTINCT description FROM etat");
+    $result = $conn->query("SELECT DISTINCT nom FROM nom");
     if ($result) {
-        $response['fk_arb_etat'] = [];
+        $response['fk_nom'] = [];
         while ($row = $result->fetch_assoc()) {
-            $response['fk_arb_etat'][] = $row['description'];
+            $response['fk_nom'][] = $row['nom'];
         }
     } else {
-        // Gestion des erreurs SQL
         $response['error'] = $conn->error;
-        error_log("Erreur SQL - fk_arb_etat: " . $conn->error); // Journalisation de l'erreur SQL
     }
 
-    // Récupérer les données pour le sélecteur 'fk_stadedev' depuis la table 'stade_dev'
-    $result = $conn->query("SELECT DISTINCT description FROM stade_dev");
-    if ($result) {
-        $response['fk_stadedev'] = [];
-        while ($row = $result->fetch_assoc()) {
-            $response['fk_stadedev'][] = $row['description'];
-        }
-    } else {
-        // Gestion des erreurs SQL
-        $response['error'] = $conn->error;
-        error_log("Erreur SQL - fk_stadedev: " . $conn->error); // Journalisation de l'erreur SQL
-    }
-
-    // Récupérer les données pour le sélecteur 'fk_port' depuis la table 'port'
-    $result = $conn->query("SELECT DISTINCT description FROM port");
-    if ($result) {
-        $response['fk_port'] = [];
-        while ($row = $result->fetch_assoc()) {
-            $response['fk_port'][] = $row['description'];
-        }
-    } else {
-        // Gestion des erreurs SQL
-        $response['error'] = $conn->error;
-        error_log("Erreur SQL - fk_port: " . $conn->error); // Journalisation de l'erreur SQL
-    }
-
-    // Récupérer les données pour le sélecteur 'fk_pied' depuis la table 'pied'
     $result = $conn->query("SELECT DISTINCT description FROM pied");
     if ($result) {
         $response['fk_pied'] = [];
@@ -104,9 +77,37 @@ if ($action == 'addArbre') {
             $response['fk_pied'][] = $row['description'];
         }
     } else {
-        // Gestion des erreurs SQL
         $response['error'] = $conn->error;
-        error_log("Erreur SQL - fk_pied: " . $conn->error); // Journalisation de l'erreur SQL
+    }
+
+    $result = $conn->query("SELECT DISTINCT description FROM stade_dev");
+    if ($result) {
+        $response['fk_stadedev'] = [];
+        while ($row = $result->fetch_assoc()) {
+            $response['fk_stadedev'][] = $row['description'];
+        }
+    } else {
+        $response['error'] = $conn->error;
+    }
+
+    $result = $conn->query("SELECT DISTINCT description FROM port");
+    if ($result) {
+        $response['fk_port'] = [];
+        while ($row = $result->fetch_assoc()) {
+            $response['fk_port'][] = $row['description'];
+        }
+    } else {
+        $response['error_port'] = $conn->error;
+    }
+
+    $result = $conn->query("SELECT DISTINCT description FROM etat");
+    if ($result) {
+        $response['fk_arb_etat'] = [];
+        while ($row = $result->fetch_assoc()) {
+            $response['fk_arb_etat'][] = $row['description'];
+        }
+    } else {
+        $response['error_etat'] = $conn->error;
     }
 
     // Répondre avec les données récupérées
