@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<!-- Formulaire pour ajouter un arbre -->
+<form id="addArbreForm">
+    <input type="text" name="longitude" placeholder="Longitude" required>
+    <input type="text" name="latitude" placeholder="Latitude" required>
+    <input type="text" name="haut_tot" placeholder="Hauteur Totale" required>
+    <input type="text" name="haut_tronc" placeholder="Hauteur Tronc" required>
+    <input type="text" name="age_estim" placeholder="Age Estimé" required>
+    <input type="text" name="tronc_diam" placeholder="Diamètre Tronc" required>
+    <input type="text" name="remarquable" placeholder="Remarquable" required>
+    <button type="submit">Ajouter Arbre</button>
+</form>
+
+<!-- Div pour afficher les données des arbres -->
+<div id="arbreList"></div>
+
+<script>
+$(document).ready(function() {
+    // Fonction pour récupérer et afficher les données des arbres
+    function getArbre() {
+        $.ajax({
+            url: 'request.php',
+            type: 'GET',
+            data: { action: 'getArbre' },
+            success: function(data) {
+                let html = '<ul>';
+                $.each(data, function(index, arbre) {
+                    html += `<li>${arbre.id_arbre}: ${arbre.longitude}, ${arbre.latitude}, ${arbre.haut_tot}</li>`;
+                });
+                html += '</ul>';
+                $('#arbreList').html(html);
+            }
+        });
+    }
+
+    // Appeler la fonction pour récupérer les données des arbres au chargement de la page
+    getArbre();
+
+    // Fonction pour ajouter un arbre
+    $('#addArbreForm').submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: 'request.php?action=addArbre',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(data) {
+                if (data.success) {
+                    alert('Arbre ajouté avec succès!');
+                    getArbre(); // Mettre à jour la liste des arbres
+                } else {
+                    alert('Erreur: ' + data.error);
+                }
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
