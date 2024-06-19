@@ -1,81 +1,23 @@
-function validateForm() {
-  var form = document.forms["myForm"];
-  var inputs = form.getElementsByTagName("input");
-  for (var i = 0; i < inputs.length; i++) {
-    if (inputs[i].value === "") {
-      alert("Tous les champs doivent être remplis");
-      return false;
-    }
-  }
-  var textInput = form["fk_nomtech"];
-  var regex = /^[a-zA-Z]+$/;
-  if (!regex.test(textInput.value)) {
-    alert("Le champ texte ne doit contenir que des lettres");
-    return false;
-  }
-  return true;
-}
-
-
-
 $(document).ready(function() {
     // Fonction pour remplir les champs de sélection
     function fillSelectFields(data) {
-        console.log("Données reçues:", data); // Vérifier les données reçues dans la console
-
-        // Remplir le sélecteur fk_nomtech
-        var fk_nomtechSelect = $('#fk_nomtech');
-        fk_nomtechSelect.empty(); // Vide toutes les options actuelles
-
-        $.each(data.fk_nomtech, function(index, value) {
-            console.log("Valeur pour fk_nomtech:", value);
-            fk_nomtechSelect.append($('<option>').text(value).attr('value', value));
-        });
-
-        // Remplir le sélecteur fk_arb_etat
-        var fk_arb_etatSelect = $('#fk_arb_etat');
-        fk_arb_etatSelect.empty();
-
-        $.each(data.fk_arb_etat, function(index, value) {
-            fk_arb_etatSelect.append($('<option>').text(value).attr('value', value));
-        });
-
-        // Remplir le sélecteur fk_stadedev
-        var fk_stadedevSelect = $('#fk_stadedev');
-        fk_stadedevSelect.empty();
-
-        $.each(data.fk_stadedev, function(index, value) {
-            fk_stadedevSelect.append($('<option>').text(value).attr('value', value));
-        });
-
-        // Remplir le sélecteur fk_port
-        var fk_portSelect = $('#fk_port');
-        fk_portSelect.empty();
-
-        $.each(data.fk_port, function(index, value) {
-            fk_portSelect.append($('<option>').text(value).attr('value', value));
-        });
-
-        // Remplir le sélecteur fk_pied
-        var fk_piedSelect = $('#fk_pied');
-        fk_piedSelect.empty();
-
-        $.each(data.fk_pied, function(index, value) {
-            fk_piedSelect.append($('<option>').text(value).attr('value', value));
-        });
+        // Remplir les sélecteurs
+        $('#fk_nomtech').empty().append(data.fk_nom.map(nom => $('<option>').text(nom).attr('value', nom)));
+        $('#fk_arb_etat').empty().append(data.fk_arb_etat.map(etat => $('<option>').text(etat).attr('value', etat)));
+        $('#fk_stadedev').empty().append(data.fk_stadedev.map(stade => $('<option>').text(stade).attr('value', stade)));
+        $('#fk_port').empty().append(data.fk_port.map(port => $('<option>').text(port).attr('value', port)));
+        $('#fk_pied').empty().append(data.fk_pied.map(pied => $('<option>').text(pied).attr('value', pied)));
     }
 
     // Appeler la fonction pour remplir les champs de sélection lors du chargement de la page
     $.ajax({
         type: 'GET',
-        url: 'request.php?action=getFormData',
+        url: '../../back/php/request.php?action=getFormData',
         dataType: 'json',
         encode: true
     }).done(function(data) {
-        console.log("Réponse AJAX réussie:", data); // Vérifier la réponse AJAX dans la console
         fillSelectFields(data); // Appel de la fonction pour remplir les champs de sélection
     }).fail(function(xhr, status, error) {
-        console.error("Erreur AJAX:", status, error); // Gestion des erreurs AJAX
         alert('Erreur lors de la récupération des données.');
     });
 
@@ -85,6 +27,13 @@ $(document).ready(function() {
 
         // Prépare les données du formulaire
         var formData = {
+            fk_nomtech: $('#fk_nomtech').val(),
+            haut_tronc: $('#haut_tronc').val(),
+            tronc_diam: $('#tronc_diam').val(),
+            haut_tot: $('#haut_tot').val(),
+            remarquable: $('#remarquable').is(':checked') ? 1 : 0,
+            latitude: $('#latitude').val(),
+            longitude: $('#longitude').val(),
             fk_arb_etat: $('#fk_arb_etat').val(),
             fk_stadedev: $('#fk_stadedev').val(),
             fk_port: $('#fk_port').val(),
@@ -94,82 +43,19 @@ $(document).ready(function() {
         // Envoie les données du formulaire via AJAX
         $.ajax({
             type: 'POST',
-            url: 'request.php?action=addArbre',
+            url: '../../back/php/request.php?action=addArbre',
             data: formData,
             dataType: 'json',
             encode: true
         }).done(function(data) {
-            console.log("Réponse de soumission du formulaire:", data);
-
-            try {
-                if (data.success) {
-                    alert('Arbre ajouté avec succès!');
-                    $('#myForm')[0].reset(); // Réinitialiser le formulaire après une soumission réussie
-                } else {
-                    alert('Erreur: ' + data.error);
-                }
-            } catch (e) {
-                console.error("Erreur d'analyse JSON:", e);
-                alert('Erreur inattendue lors de la soumission du formulaire.');
+            if (data.success) {
+                alert('Arbre ajouté avec succès!');
+                $('#myForm')[0].reset(); // Réinitialiser le formulaire après une soumission réussie
+            } else {
+                alert('Erreur: ' + data.error);
             }
         }).fail(function(xhr, status, error) {
-            console.error("Erreur AJAX:", status, error); // Gestion des erreurs AJAX
             alert('Erreur inattendue lors de la soumission du formulaire.');
         });
     });
 });
-$(document).ready(function() {
-    // Fonction pour remplir les champs de sélection
-    function fillSelectFields(data) {
-        console.log("Données reçues:", data); // Vérifier les données reçues dans la console
-
-       
-
-        // Remplir le sélecteur fk_arb_etat
-        var fk_arb_etatSelect = $('#fk_arb_etat');
-        fk_arb_etatSelect.empty();
-
-        $.each(data.fk_arb_etat, function(index, value) {
-            fk_arb_etatSelect.append($('<option>').text(value).attr('value', value));
-        });
-
-        // Remplir le sélecteur fk_stadedev
-        var fk_stadedevSelect = $('#fk_stadedev');
-        fk_stadedevSelect.empty();
-
-        $.each(data.fk_stadedev, function(index, value) {
-            fk_stadedevSelect.append($('<option>').text(value).attr('value', value));
-        });
-
-        // Remplir le sélecteur fk_port
-        var fk_portSelect = $('#fk_port');
-        fk_portSelect.empty();
-
-        $.each(data.fk_port, function(index, value) {
-            fk_portSelect.append($('<option>').text(value).attr('value', value));
-        });
-
-        // Remplir le sélecteur fk_pied
-        var fk_piedSelect = $('#fk_pied');
-        fk_piedSelect.empty();
-
-        $.each(data.fk_pied, function(index, value) {
-            fk_piedSelect.append($('<option>').text(value).attr('value', value));
-        });
-    }
-
-    // Appeler la fonction pour remplir les champs de sélection lors du chargement de la page
-    $.ajax({
-        type: 'GET',
-        url: 'request.php?action=getFormData',
-        dataType: 'json',
-        encode: true
-    }).done(function(data) {
-        console.log("Réponse AJAX réussie:", data); // Vérifier la réponse AJAX dans la console
-        fillSelectFields(data); // Appel de la fonction pour remplir les champs de sélection
-    }).fail(function(xhr, status, error) {
-        console.error("Erreur AJAX:", status, error); // Gestion des erreurs AJAX
-        alert('Erreur lors de la récupération des données.');
-    });
-});
-
