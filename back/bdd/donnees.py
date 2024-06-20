@@ -1,21 +1,23 @@
 import mysql.connector
 import csv
+import os
 
 # Configurer la connexion à la base de données
-config = {
-    'user': 'etu0112',
-    'password': 'odqmttgm',
-    'host': 'localhost',
-    'database': 'etu0112',
-}
-
+conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="bddstquentin"
+        )
 # Connexion à la base de données
-conn = mysql.connector.connect(**config)
+# conn = mysql.connector.connect(**config)
 cursor = conn.cursor()
 cursor.execute('ALTER TABLE arbre AUTO_INCREMENT = 1')
+csv_file_path = os.path.join(os.path.dirname(__file__), '..', 'bdd', 'Data_Arbre.csv')
+
 # Ouvrir le fichier CSV
 try:
-    with open('Data_Arbre.csv', encoding='utf-8') as csvfile:
+    with open(csv_file_path, encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             # Extraire les données pertinentes du fichier CSV
