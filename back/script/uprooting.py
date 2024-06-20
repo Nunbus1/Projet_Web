@@ -4,10 +4,10 @@
 # \\Company: ISEN Yncréa Ouest
 # \\Email: thibault.napoleon@isen-ouest.yncrea.fr
 # \\Created Date: 02-Jun-2023 - 23:23:21
-# \\Last Modified: 12-Jun-2024 - 22:01:04
+# \\Last Modified: 12-Jun-2024 - 22:01:14
 ###
 
-"""Predict tree age."""
+"""Predict tree uprooting."""
 
 # Imports.
 import argparse
@@ -45,10 +45,10 @@ def checkArguments():
 # Main program.
 args = checkArguments()
 if args.model == 'knn':
-    print(30)
+    print('true')
 if args.model == 'svm':
-    print(15)
+    print('true')
 if args.model == 'rf':
-    print(25)
+    print('false')
 if args.model == 'mlp':
-    print(23)
+    print('true')
