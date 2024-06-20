@@ -84,15 +84,34 @@ html, body {
     user-select: none;
 }
 
-  .details-arbres-buttons button {
+.details-arbres-buttons button {
     padding: 8px 12px;
     background-color: #00505B;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 4px;
-  }
-  .details-arbres-buttons button:hover {
+}
+.details-arbres-buttons button:hover {
     background-color: #fff;
     color: #00505B;
-  }
+}
+
+#legend {
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#legend h3 {
+    margin-top: 0;
+}
+
+.color-box {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    vertical-align: middle;
+}

@@ -30,35 +30,38 @@
     <main>
       <div id="map"></div>
       <div id="tableContainer">
-        <div id="treeContainer">
-          <div id="trail"></div>
-          <div id="tree">🌸</div>
-        </div>
         <h2>Cluster</h2>
-        <!-- <table id="arbreTable">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Espèce</th>
-              <th>Hauteur</th>
-              <th>Diamètre</th>
-              <th>Remarquable</th>
-              <th>Latitude</th>
-              <th>Longitude</th>
-            </tr>
-          </thead>
-          <tbody>
-          
-          </tbody>
-        </table> -->
+        <form id="clusterForm">
+          <label for="numClusters">Nombre de clusters:</label>
+          <select id="numClusters" name="numClusters">
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <button type="button" id="applyClusters">Appliquer</button>
+        </form>
+        <div id="legend">
+          <h3>Légende</h3>
+          <div>
+            <span class="color-box" style="background-color: red"></span>
+            Cluster 1
+          </div>
+          <div>
+            <span class="color-box" style="background-color: blue"></span>
+            Cluster 2
+          </div>
+          <div>
+            <span class="color-box" style="background-color: green"></span>
+            Cluster 3
+          </div>
+        </div>
         <div id="pagination">
           <!-- Les boutons de pagination seront générés par JavaScript -->
         </div>
         <br />
         <div class="details-arbres-buttons">
           <a href="map.html"><button>Map</button></a>
-          <!-- <a href="age.html"><button>Âge</button></a>
-          <a href="deracinement.html"><button>Déracinement</button></a> -->
         </div>
       </div>
     </main>
