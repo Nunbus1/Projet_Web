@@ -40,7 +40,7 @@ def main():
         )
 
         # Requête pour récupérer les données des arbres
-        query = "SELECT id_arbre, longitude, latitude FROM arbre"
+        query = "SELECT id_arbre, longitude, latitude FROM arbre LIMIT 100"
         df = pd.read_sql(query, conn)
 
         # Fermer la connexion
