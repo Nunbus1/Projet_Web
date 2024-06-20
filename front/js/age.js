@@ -21,4 +21,5 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector("h3:nth-of-type(5)").textContent = `Latitude : ${latitude}`;
   document.querySelector("h3:nth-of-type(6)").textContent = `Longitude : ${longitude}`;
   document.querySelector("h3:nth-of-type(7)").textContent = `Âge prédit : ${prediction}`;
+  
 });
