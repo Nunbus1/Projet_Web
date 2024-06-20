@@ -6,20 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
       const response = await fetch(
         `../../back/php/cluster.php?numClusters=${numClusters}`
       );
-      const result = await response.json();
-      console.log("Données reçues:", result);
+      const clusters = await response.json();
+      console.log("Données reçues:", clusters);
 
-      if (result.error) {
-        console.error("Error fetching clusters:", result.error);
+      if (clusters.error) {
+        console.error("Error fetching clusters:", clusters.error);
         return;
       }
 
-      if (!Array.isArray(result.data)) {
-        console.error("Clusters data is not an array:", result.data);
-        return;
-      }
-
-      displayMap(result.data);
+      displayMap(clusters.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -62,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("applyClusters")
     .addEventListener("click", function () {
       const numClusters = document.getElementById("numClusters").value;
+      console.log(`Nombre de clusters sélectionné : ${numClusters}`); // Debug: afficher numClusters
       fetchClusters(numClusters);
     });
 
