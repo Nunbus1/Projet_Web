@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Prédiction de l'âge</title>
-	<link rel="stylesheet" href="../css/header.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prédiction de l'âge</title>
+    <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/footer.css" />
     <link rel="stylesheet" href="../css/age.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/age.js"></script>
 </head>
 <body>
-	<header>
+    <header>
         <nav>
             <ul>
                 <a href="home.html" data-anchor="accueil">Accueil</a>
@@ -28,13 +29,13 @@
             <div class="image-container">
                 <img class="arbre" src="../image/arbre.png" alt="arbre">
             </div>
-            <h3>Espèce :</h3>
-            <h3>Hauteur :</h3>
-            <h3>Diamètre :</h3>
-            <h3>Remarquable :</h3>
-            <h3>Latitude :</h3>
-            <h3>Longitude :</h3>
-            <h3>Âge prédit :</h3>
+            <h3>Espèce : <span id="species"></span></h3>
+            <h3>Hauteur : <span id="height"></span></h3>
+            <h3>Diamètre : <span id="diameter"></span></h3>
+            <h3>Remarquable : <span id="remarkable"></span></h3>
+            <h3>Latitude : <span id="latitude"></span></h3>
+            <h3>Longitude : <span id="longitude"></span></h3>
+            <h3>Âge prédit : <span id="predicted_age"></span></h3>
         </main>
     </div>
     <footer>

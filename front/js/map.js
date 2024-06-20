@@ -1,20 +1,23 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", function () {
-  async function fetchArbres() {
-    try {
-      const response = await fetch("../../back/php/map.php?action=getArbres");
-      const arbres = await response.json();
-      console.log("Données reçues:", arbres);
+  let currentPage = 1;
+  const itemsPerPage = 5;
 
-      if (arbres.error) {
-        console.error("Error fetching arbres:", arbres.error);
+  async function fetchArbres(page = 1) {
+    try {
+      const response = await fetch(`../../back/php/map.php?action=getArbres&page=${page}`);
+      const data = await response.json();
+      console.log("Données reçues:", data);
+
+      if (data.error) {
+        console.error("Error fetching arbres:", data.error);
         return;
       }
 
-      displayMap(arbres);
-      displayTable(arbres);
-      setupPagination(arbres);
+      displayMap(data.arbres_paginated);
+      displayTable(data.arbres_paginated);
+      setupPagination(data.totalPages, data.currentPage);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -60,12 +63,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const tableBody = document.querySelector("#arbreTable tbody");
     tableBody.innerHTML = "";
 
-    arbres.slice(0, 5).forEach((arbre) => {
+    arbres.forEach((arbre) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><input type="checkbox" class="arbre-checkbox" data-id="${
-          arbre.id_arbre
-        }"></td>
+        <td><input type="radio" name="selectedArbre" class="arbre-checkbox" data-id="${arbre.id_arbre}"></td>
         <td>${arbre.nom}</td>
         <td>${arbre.haut_tot}</td>
         <td>${arbre.tronc_diam}</td>
@@ -79,47 +80,30 @@ document.addEventListener("DOMContentLoaded", function () {
     setupCheckboxEventListeners();
   }
 
-  function setupPagination(arbres) {
-    const itemsPerPage = 5;
-    const totalPages = Math.ceil(arbres.length / itemsPerPage);
+  function setupPagination(totalPages, currentPage) {
     const pagination = document.getElementById("pagination");
-    const tableBody = document.querySelector("#arbreTable tbody");
+    pagination.innerHTML = "";
 
-    for (let i = 1; i <= totalPages; i++) {
-      const pageLink = document.createElement("button");
-      pageLink.textContent = i;
-      pageLink.addEventListener("click", function () {
-        displayPage(i);
-      });
-      pagination.appendChild(pageLink);
-    }
+    const prevButton = document.createElement("button");
+    prevButton.textContent = "Précédent";
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener("click", function () {
+      if (currentPage > 1) {
+        fetchArbres(currentPage - 1);
+      }
+    });
 
-    function displayPage(page) {
-      const start = (page - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      const pageArbres = arbres.slice(start, end);
+    const nextButton = document.createElement("button");
+    nextButton.textContent = "Suivant";
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener("click", function () {
+      if (currentPage < totalPages) {
+        fetchArbres(currentPage + 1);
+      }
+    });
 
-      tableBody.innerHTML = "";
-      pageArbres.forEach((arbre) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td><input type="checkbox" class="arbre-checkbox" data-id="${
-            arbre.id_arbre
-          }"></td>
-          <td>${arbre.nom}</td>
-          <td>${arbre.haut_tot}</td>
-          <td>${arbre.tronc_diam}</td>
-          <td>${arbre.remarquable ? "Oui" : "Non"}</td>
-          <td>${arbre.latitude}</td>
-          <td>${arbre.longitude}</td>
-        `;
-        tableBody.appendChild(row);
-      });
-
-      setupCheckboxEventListeners();
-    }
-
-    displayPage(1);
+    pagination.appendChild(prevButton);
+    pagination.appendChild(nextButton);
   }
 
   function setupCheckboxEventListeners() {
@@ -184,10 +168,51 @@ document.addEventListener("DOMContentLoaded", function () {
       walk / (treeContainer.scrollWidth - tree.clientWidth);
     tableContainer.scrollLeft =
       scrollPercentage *
-      (tableContainer.scrollWidth - tableContainer.clientWidth);
-  });
-
-  updateTreePosition();
-
-  fetchArbres();
-});
+      (tableContainer.scrollWidth - tableContainer.client.clientWidth);
+      });
+    
+      updateTreePosition();
+    
+      fetchArbres(currentPage);
+    
+      document.getElementById("predict-age-button").addEventListener("click", function () {
+        const checkedCheckbox = document.querySelector('input[name="selectedArbre"]:checked');
+        if (!checkedCheckbox) {
+          alert("Veuillez sélectionner un arbre pour prédire l'âge.");
+          return;
+        }
+    
+        const selectedRow = checkedCheckbox.closest("tr");
+        const arbreId = checkedCheckbox.dataset.id;
+        const espece = selectedRow.cells[1].textContent;
+        const hauteur = selectedRow.cells[2].textContent;
+        const diametre = selectedRow.cells[3].textContent;
+        const remarquable = selectedRow.cells[4].textContent === "Oui" ? 1 : 0;
+        const latitude = selectedRow.cells[5].textContent;
+        const longitude = selectedRow.cells[6].textContent;
+    
+        // Rediriger vers la page de prédiction en passant les informations de l'arbre sélectionné
+        window.location.href = `age.html?id=${arbreId}&espece=${espece}&hauteur=${hauteur}&diametre=${diametre}&remarquable=${remarquable}&latitude=${latitude}&longitude=${longitude}`;
+      });
+    
+      document.getElementById("predict-deracinement-button").addEventListener("click", function () {
+        const checkedCheckbox = document.querySelector('input[name="selectedArbre"]:checked');
+        if (!checkedCheckbox) {
+          alert("Veuillez sélectionner un arbre pour prédire le déracinement.");
+          return;
+        }
+    
+        const selectedRow = checkedCheckbox.closest("tr");
+        const arbreId = checkedCheckbox.dataset.id;
+        const espece = selectedRow.cells[1].textContent;
+        const hauteur = selectedRow.cells[2].textContent;
+        const diametre = selectedRow.cells[3].textContent;
+        const remarquable = selectedRow.cells[4].textContent === "Oui" ? 1 : 0;
+        const latitude = selectedRow.cells[5].textContent;
+        const longitude = selectedRow.cells[6].textContent;
+    
+        // Rediriger vers la page de prédiction en passant les informations de l'arbre sélectionné
+        window.location.href = `deracinement.html?id=${arbreId}&espece=${espece}&hauteur=${hauteur}&diametre=${diametre}&remarquable=${remarquable}&latitude=${latitude}&longitude=${longitude}`;
+      });
+    });
+    
