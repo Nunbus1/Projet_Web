@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Prédiction de l'âge</title>
-    <link rel="stylesheet" href="../css/header.css" />
-    <link rel="stylesheet" href="../css/footer.css" />
-    <link rel="stylesheet" href="../css/age.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../js/age.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prédiction de l'âge</title>
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/age.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <a href="home.html" data-anchor="accueil">Accueil</a>
-                <a href="form.html" data-anchor="add">Ajout d'arbre</a>
-                <a href="map.html" data-anchor="visualisation">Visualisation</a>
-            </ul>
-            <ul>
-                <div class="progress-bar"></div>
-            </ul>
-        </nav>
-    </header>
-    <div class="container">
-        <main>
-            <h1>Prédiction de l'âge</h1>
-            <div class="image-container">
-                <img class="arbre" src="../image/arbre.png" alt="arbre">
-            </div>
-            <h3>Espèce : <span id="species"></span></h3>
-            <h3>Hauteur : <span id="height"></span></h3>
-            <h3>Diamètre : <span id="diameter"></span></h3>
-            <h3>Remarquable : <span id="remarkable"></span></h3>
-            <h3>Latitude : <span id="latitude"></span></h3>
-            <h3>Longitude : <span id="longitude"></span></h3>
-            <h3>Âge prédit : <span id="predicted_age"></span></h3>
-        </main>
-    </div>
-    <footer>
-      <p class="footer">
-        Projet Web - Trinôme 2 | Groupe 1
-        <br />
-        Chapon Pier, Cordonnier Clara, Dutournier Vincent
-      </p>
-      <img src="../image/isen.jpg" alt="" />
-    </footer>
+  <header>
+    <nav>
+      <ul>
+        <a href="home.html" data-anchor="accueil">Accueil</a>
+        <a href="form.html" data-anchor="add">Ajout d'arbre</a>
+        <a href="map.html" data-anchor="visualisation">Visualisation</a>
+      </ul>
+      <ul>
+        <div class="progress-bar"></div>
+      </ul>
+    </nav>
+  </header>
+  <div class="container">
+    <main>
+      <h1>Prédiction de l'âge</h1>
+      <div class="image-container">
+        <img class="arbre" src="../image/arbre.png" alt="arbre">
+      </div>
+      <h3 id="espece">Espèce :</h3>
+      <h3 id="hauteur">Hauteur :</h3>
+      <h3 id="diametre">Diamètre :</h3>
+      <h3 id="remarquable">Remarquable :</h3>
+      <h3 id="latitude">Latitude :</h3>
+      <h3 id="longitude">Longitude :</h3>
+      <h3 id="age-predit">Âge prédit :</h3>
+      <div id="error-message" style="color: red;"></div>
+    </main>
+  </div>
+  <footer>
+    <p class="footer">
+      Projet Web - Trinôme 2 | Groupe 1
+      <br />
+      Chapon Pier, Cordonnier Clara, Dutournier Vincent
+    </p>
+    <img src="../image/isen.jpg" alt="" />
+  </footer>
+  <script src="../js/age.js"></script>
 </body>
 </html>

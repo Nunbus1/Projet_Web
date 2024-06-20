@@ -6,33 +6,39 @@ header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 require_once 'dbconnect.php';
 
+$conn = connectDB();
+
 $action = isset($_GET['action']) ? $_GET['action'] : '';
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$itemsPerPage = 5; // Nombre d'arbres par page
-$offset = ($page - 1) * $itemsPerPage;
 
 if ($action == 'getArbres') {
-    // Récupérer les arbres pour la page actuelle du tableau et de la carte
-    $sql_paginated = "SELECT a.id_arbre, a.latitude, a.longitude, a.haut_tot, a.tronc_diam, a.remarquable, n.nom
-                      FROM arbre a
-                      JOIN nom n ON a.id_arbre = n.id_arbre
-                      LIMIT $itemsPerPage OFFSET $offset";
-    $result_paginated = $conn->query($sql_paginated);
+    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    $itemsPerPage = 5;
+    $offset = ($page - 1) * $itemsPerPage;
 
-    $arbres_paginated = [];
-    if ($result_paginated->num_rows > 0) {
-        while ($row = $result_paginated->fetch_assoc()) {
-            $arbres_paginated[] = $row;
+    $totalQuery = "SELECT COUNT(*) AS total FROM arbre";
+    $totalResult = $conn->query($totalQuery);
+    $totalRow = $totalResult->fetch_assoc();
+    $totalItems = $totalRow['total'];
+    $totalPages = ceil($totalItems / $itemsPerPage);
+
+    $sql = "SELECT a.id_arbre, a.latitude, a.longitude, a.haut_tot, a.tronc_diam, a.remarquable, n.nom
+            FROM arbre a
+            JOIN nom n ON a.id_arbre = n.id_arbre
+            LIMIT $itemsPerPage OFFSET $offset";
+    $result = $conn->query($sql);
+
+    $arbres = [];
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $arbres[] = $row;
         }
+    } else {
+        echo json_encode(['error' => 'Aucune donnée trouvée']);
+        exit;
     }
 
-    // Obtenir le nombre total d'arbres pour la pagination
-    $totalArbresResult = $conn->query("SELECT COUNT(*) as total FROM arbre");
-    $totalArbres = $totalArbresResult->fetch_assoc()['total'];
-    $totalPages = ceil($totalArbres / $itemsPerPage);
-
     echo json_encode([
-        'arbres_paginated' => $arbres_paginated,
+        'arbres_paginated' => $arbres,
         'totalPages' => $totalPages,
         'currentPage' => $page
     ]);
