@@ -13,10 +13,19 @@ $offset = ($page - 1) * $itemsPerPage;
 
 if ($action == 'getArbres') {
     // Récupérer les arbres pour la page actuelle du tableau et de la carte
-    $sql_paginated = "SELECT a.id_arbre, a.latitude, a.longitude, a.haut_tot, a.tronc_diam, a.remarquable, n.nom
-                      FROM arbre a
-                      JOIN nom n ON a.id_arbre = n.id_arbre
-                      LIMIT $itemsPerPage OFFSET $offset";
+   $sql_paginated = "
+    SELECT a.id_arbre, a.latitude, a.longitude, a.haut_tot, a.tronc_diam, a.remarquable, a.haut_tronc, n.nom,
+           e.description as fk_arb_etat, 
+           s.description as fk_stadedev, 
+           p.description as fk_port, 
+           pi.description as fk_pied
+    FROM arbre a
+    LEFT JOIN etat e ON a.id_arbre = e.id_arbre
+    LEFT JOIN stade_dev s ON a.id_arbre = s.id_arbre
+    LEFT JOIN port p ON a.id_arbre = p.id_arbre
+    LEFT JOIN pied pi ON a.id_arbre = pi.id_arbre
+    LEFT JOIN nom n ON a.id_arbre = n.id_arbre
+    LIMIT $itemsPerPage OFFSET $offset";
     $result_paginated = $conn->query($sql_paginated);
 
     $arbres_paginated = [];

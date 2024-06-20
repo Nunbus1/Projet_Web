@@ -3,6 +3,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let currentPage = 1;
   const itemsPerPage = 5;
+  let arbresData = []; // Variable globale pour stocker les données des arbres
 
   async function fetchArbres(page = 1) {
     try {
@@ -15,9 +16,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      displayMap(data.arbres_paginated);
-      displayTable(data.arbres_paginated);
+      arbresData = data.arbres_paginated; // Stocker les données des arbres récupérées
+      displayMap(arbresData);
+      displayTable(arbresData);
       setupPagination(data.totalPages, data.currentPage);
+      setupFilterListeners(); // Appeler la fonction pour configurer les filtres après avoir chargé les données
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -35,9 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         color: arbre.remarquable ? "green" : "fuchsia",
       },
       text: [
-        `Nom: ${arbre.nom}<br>Hauteur: ${arbre.haut_tot}m<br>Diamètre: ${
-          arbre.tronc_diam
-        }cm<br>Remarquable: ${arbre.remarquable ? "Oui" : "Non"}`,
+        `Nom: ${arbre.nom}<br>Hauteur: ${arbre.haut_tot}m<br>Diamètre: ${arbre.tronc_diam}cm<br>Remarquable: ${arbre.remarquable ? "Oui" : "Non"}`,
       ],
       hoverinfo: "text",
     }));
@@ -54,8 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     Plotly.newPlot("map", data, layout, {
-      mapboxAccessToken:
-        "pk.eyJ1IjoibnVuYnVzIiwiYSI6ImNseGppanZjdDFxdGoyanFwaG4wNjVtaG4ifQ.BXNSajM0Roj6pVMoUZc39A",
+      mapboxAccessToken: "pk.eyJ1IjoibnVuYnVzIiwiYSI6ImNseGppanZjdDFxdGoyanFwaG4wNjVtaG4ifQ.BXNSajM0Roj6pVMoUZc39A",
     });
   }
 
@@ -69,21 +69,32 @@ document.addEventListener("DOMContentLoaded", function () {
         <td><input type="radio" name="selectedArbre" class="arbre-checkbox" data-id="${arbre.id_arbre}"></td>
         <td>${arbre.nom}</td>
         <td>${arbre.haut_tot}</td>
+        <td>${arbre.haut_tronc}</td>
         <td>${arbre.tronc_diam}</td>
         <td>${arbre.remarquable ? "Oui" : "Non"}</td>
         <td>${arbre.latitude}</td>
         <td>${arbre.longitude}</td>
+        <td>${arbre.fk_arb_etat}</td>
+        <td>${arbre.fk_stadedev}</td>
+        <td>${arbre.fk_pied}</td>
+        <td>${arbre.fk_port}</td>
+
+
       `;
       tableBody.appendChild(row);
     });
 
     setupCheckboxEventListeners();
   }
+  const filterDiametreCheckbox = document.getElementById("filterDiametreCheckbox");
+  const filterHauteurCheckbox = document.getElementById("filterHauteurCheckbox");
+  const filterEtatSelect = document.getElementById("filterEtatSelect");
 
   function setupPagination(totalPages, currentPage) {
     const pagination = document.getElementById("pagination");
     pagination.innerHTML = "";
-
+    filterDiametreCheckbox.checked = false;
+    filterHauteurCheckbox.checked = false;
     const prevButton = document.createElement("button");
     prevButton.textContent = "Précédent";
     prevButton.disabled = currentPage === 1;
@@ -168,51 +179,82 @@ document.addEventListener("DOMContentLoaded", function () {
       walk / (treeContainer.scrollWidth - tree.clientWidth);
     tableContainer.scrollLeft =
       scrollPercentage *
-      (tableContainer.scrollWidth - tableContainer.client.clientWidth);
-      });
-    
-      updateTreePosition();
-    
-      fetchArbres(currentPage);
-    
-      document.getElementById("predict-age-button").addEventListener("click", function () {
-        const checkedCheckbox = document.querySelector('input[name="selectedArbre"]:checked');
-        if (!checkedCheckbox) {
-          alert("Veuillez sélectionner un arbre pour prédire l'âge.");
-          return;
-        }
-    
-        const selectedRow = checkedCheckbox.closest("tr");
-        const arbreId = checkedCheckbox.dataset.id;
-        const espece = selectedRow.cells[1].textContent;
-        const hauteur = selectedRow.cells[2].textContent;
-        const diametre = selectedRow.cells[3].textContent;
-        const remarquable = selectedRow.cells[4].textContent === "Oui" ? 1 : 0;
-        const latitude = selectedRow.cells[5].textContent;
-        const longitude = selectedRow.cells[6].textContent;
-    
-        // Rediriger vers la page de prédiction en passant les informations de l'arbre sélectionné
-        window.location.href = `age.html?id=${arbreId}&espece=${espece}&hauteur=${hauteur}&diametre=${diametre}&remarquable=${remarquable}&latitude=${latitude}&longitude=${longitude}`;
-      });
-    
-      document.getElementById("predict-deracinement-button").addEventListener("click", function () {
-        const checkedCheckbox = document.querySelector('input[name="selectedArbre"]:checked');
-        if (!checkedCheckbox) {
-          alert("Veuillez sélectionner un arbre pour prédire le déracinement.");
-          return;
-        }
-    
-        const selectedRow = checkedCheckbox.closest("tr");
-        const arbreId = checkedCheckbox.dataset.id;
-        const espece = selectedRow.cells[1].textContent;
-        const hauteur = selectedRow.cells[2].textContent;
-        const diametre = selectedRow.cells[3].textContent;
-        const remarquable = selectedRow.cells[4].textContent === "Oui" ? 1 : 0;
-        const latitude = selectedRow.cells[5].textContent;
-        const longitude = selectedRow.cells[6].textContent;
-    
-        // Rediriger vers la page de prédiction en passant les informations de l'arbre sélectionné
-        window.location.href = `deracinement.html?id=${arbreId}&espece=${espece}&hauteur=${hauteur}&diametre=${diametre}&remarquable=${remarquable}&latitude=${latitude}&longitude=${longitude}`;
-      });
+      (tableContainer.scrollWidth - tableContainer.clientWidth);
+  });
+
+  updateTreePosition();
+
+  fetchArbres(currentPage);
+
+  // Configuration des filtres
+  function setupFilterListeners() {
+  
+    filterDiametreCheckbox.addEventListener("change", function () {
+      if (this.checked) {
+        const filteredArbres = arbresData.filter(arbre => arbre.tronc_diam>100);
+        displayTable(filteredArbres);
+      } else {
+        displayTable(arbresData); // Afficher tous les arbres si la checkbox est décochée
+      }
     });
-    
+
+    filterHauteurCheckbox.addEventListener("change", function () {
+      if (this.checked) {
+        const filteredArbres = arbresData.filter(arbre => arbre.haut_tot > 10);
+        displayTable(filteredArbres);
+      } else {
+        displayTable(arbresData); // Afficher tous les arbres si la checkbox est décochée
+      }
+    });
+
+    filterEtatSelect.addEventListener("change", function () {
+      if (this.checked) {
+        const filteredArbres = arbresData.filter(arbre => arbre.fk_stadedev=='Jeune');
+        displayTable(filteredArbres);
+      } else {
+        displayTable(arbresData); // Afficher tous les arbres si la checkbox est décochée
+      }
+    });
+  }
+
+  // Redirection vers les pages de prédiction
+  document.getElementById("predict-age-button").addEventListener("click", function () {
+    const checkedCheckbox = document.querySelector('input[name="selectedArbre"]:checked');
+    if (!checkedCheckbox) {
+      alert("Veuillez sélectionner un arbre pour prédire l'âge.");
+      return;
+    }
+
+    const selectedRow = checkedCheckbox.closest("tr");
+    const arbreId = checkedCheckbox.dataset.id;
+    const espece = selectedRow.cells[1].textContent;
+    const hauteur = selectedRow.cells[2].textContent;
+    const diametre = selectedRow.cells[3].textContent;
+    const remarquable = selectedRow.cells[4].textContent === "Oui" ? 1 : 0;
+    const latitude = selectedRow.cells[5].textContent;
+    const longitude = selectedRow.cells[6].textContent;
+
+    // Rediriger vers la page de prédiction en passant les informations de l'arbre sélectionné
+    window.location.href = `age.html?id=${arbreId}&espece=${espece}&hauteur=${hauteur}&diametre=${diametre}&remarquable=${remarquable}&latitude=${latitude}&longitude=${longitude}`;
+  });
+
+  document.getElementById("predict-deracinement-button").addEventListener("click", function () {
+    const checkedCheckbox = document.querySelector('input[name="selectedArbre"]:checked');
+    if (!checkedCheckbox) {
+      alert("Veuillez sélectionner un arbre pour prédire le déracinement.");
+      return;
+    }
+
+    const selectedRow = checkedCheckbox.closest("tr");
+    const arbreId = checkedCheckbox.dataset.id;
+    const espece = selectedRow.cells[1].textContent;
+    const hauteur = selectedRow.cells[2].textContent;
+    const diametre = selectedRow.cells[3].textContent;
+    const remarquable = selectedRow.cells[4].textContent === "Oui" ? 1 : 0;
+    const latitude = selectedRow.cells[5].textContent;
+    const longitude = selectedRow.cells[6].textContent;
+
+    // Rediriger vers la page de prédiction en passant les informations de l'arbre sélectionné
+    window.location.href = `deracinement.html?id=${arbreId}&espece=${espece}&hauteur=${hauteur}&diametre=${diametre}&remarquable=${remarquable}&latitude=${latitude}&longitude=${longitude}`;
+  });
+});

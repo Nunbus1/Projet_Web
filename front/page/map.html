@@ -35,16 +35,29 @@
           <div id="tree">🌸</div>
         </div>
         <h2>Détails des Arbres</h2>
+        <div id="filterOptions">
+<input type="checkbox" id="filterDiametreCheckbox">
+<label for="filterDiametreCheckbox">diamètre>100</label>
+<input type="checkbox" id="filterHauteurCheckbox">
+<label for="filterHauteurCheckbox">hauteur>10</label>
+<input type="checkbox" id="filterEtatSelect">
+<label for="filterEtatSelect">Jeune</label>
+</div>
         <table id="arbreTable">
           <thead>
             <tr>
               <th></th>
               <th>Espèce</th>
-              <th>Hauteur</th>
+              <th>Hauteur totale</th>
+              <th>Hauteur tronc</th>
               <th>Diamètre</th>
               <th>Remarquable</th>
               <th>Latitude</th>
               <th>Longitude</th>
+              <th>Etat</th>
+              <th>Stade de developpement</th>
+              <th>Pied</th>
+              <th>Port</th>
             </tr>
           </thead>
           <tbody>
