@@ -8,22 +8,15 @@ $(document).ready(function() {
         $('#fk_port').empty().append(data.fk_port.map(port => $('<option>').text(port).attr('value', port)));
         $('#fk_pied').empty().append(data.fk_pied.map(pied => $('<option>').text(pied).attr('value', pied)));
     }
-
+  
     // Appeler la fonction pour remplir les champs de sélection lors du chargement de la page
-    $.ajax({
-        type: 'GET',
-        url: '../../back/php/request.php?action=getFormData',
-        dataType: 'json',
-        encode: true
-    }).done(function(data) {
-        fillSelectFields(data); 
-    }).fail(function(xhr, status, error) {
-        alert('Erreur lors de la récupération des données.');
+    ajaxRequest('GET', '../../back/php/request.php?action=getFormData', function(data) {
+        fillSelectFields(data);
     });
-
+  
     $('#myForm').submit(function(event) {
         event.preventDefault(); // Empêche le rechargement de la page
-
+  
         // Prépare les données du formulaire
         var formData = {
             fk_nomtech: $('#fk_nomtech').val(),
@@ -38,22 +31,15 @@ $(document).ready(function() {
             fk_port: $('#fk_port').val(),
             fk_pied: $('#fk_pied').val()
         };
-
-        $.ajax({
-            type: 'POST',
-            url: '../../back/php/request.php?action=addArbre',
-            data: formData,
-            dataType: 'json',
-            encode: true
-        }).done(function(data) {
+  
+        ajaxRequest('POST', '../../back/php/request.php?action=addArbre', function(data) {
             if (data.success) {
                 alert('Arbre ajouté avec succès!');
                 $('#myForm')[0].reset(); // Réinitialiser le formulaire après une soumission réussie
             } else {
                 alert('Erreur: ' + data.error);
             }
-        }).fail(function(xhr, status, error) {
-            alert('Erreur inattendue lors de la soumission du formulaire.');
-        });
+        }, $.param(formData));
     });
-});
+  });
+  

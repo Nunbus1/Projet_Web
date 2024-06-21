@@ -5,6 +5,7 @@ header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
 require_once 'dbconnect.php';
+require_once 'data_encode.php';
 
 $conn = connectDB();
 
@@ -25,25 +26,27 @@ if ($action == 'getArbres') {
             FROM arbre a
             JOIN nom n ON a.id_arbre = n.id_arbre
             LIMIT $itemsPerPage OFFSET $offset";
-    $result = $conn->query($sql);
+   
+   $result = $conn->query($sql);
 
-    $arbres = [];
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $arbres[] = $row;
-        }
-    } else {
-        echo json_encode(['error' => 'Aucune donnée trouvée']);
-        exit;
-    }
-
-    echo json_encode([
-        'arbres_paginated' => $arbres,
-        'totalPages' => $totalPages,
-        'currentPage' => $page
-    ]);
-} else {
-    echo json_encode(['error' => 'Action non supportée']);
-}
-
-$conn->close();
+   $arbres = [];
+   if ($result && $result->num_rows > 0) {
+       while ($row = $result->fetch_assoc()) {
+           $arbres[] = $row;
+       }
+   } else {
+       sendError(404);
+   }
+   
+   sendJsonData([
+       'arbres_paginated' => $arbres,
+       'totalPages' => $totalPages,
+       'currentPage' => $page
+   ], 200);
+   } else {
+       sendError(400);
+   }
+   
+   $conn->close();
+   ?>
+   

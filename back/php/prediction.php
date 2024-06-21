@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
-
 require_once 'dbconnect.php';
+require_once 'data_encode.php';
 
 $conn = connectDB();
 
@@ -9,8 +9,7 @@ $action = isset($_POST['action']) ? $_POST['action'] : '';
 $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 
 if ($id === 0) {
-    echo json_encode(['error' => 'ID invalide']);
-    exit;
+    sendError(400);
 }
 
 $sql = "SELECT a.*, n.nom, e.id_etat, e.description AS etat, s.id_stadeDev, s.description AS stade_dev, p.id_port, p.description AS port, pi.id_pied, pi.description AS pied
@@ -27,8 +26,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
-    echo json_encode(['error' => 'Arbre non trouvé']);
-    exit;
+    sendError(404);
 }
 
 $arbre = $result->fetch_assoc();
@@ -68,15 +66,13 @@ if ($action == 'age') {
         intval($arbre['id_pied'])
     );
 } else {
-    echo json_encode(['error' => 'Action non supportée']);
-    exit;
+    sendError(400);
 }
 
 exec($cmd, $output, $return_var);
 
 if ($return_var !== 0) {
-    echo json_encode(['error' => 'Erreur lors de l\'exécution du script']);
-    exit;
+    sendError(500);
 }
 
 $prediction = $output[0];
@@ -86,7 +82,7 @@ if ($action == 'age') {
     $prediction = ($prediction === 'true') ? 'Oui' : 'Non';
 }
 
-echo json_encode([
+sendJsonData([
     'nom' => $arbre['nom'],
     'haut_tot' => $arbre['haut_tot'],
     'tronc_diam' => $arbre['tronc_diam'],
@@ -94,4 +90,5 @@ echo json_encode([
     'latitude' => $arbre['latitude'],
     'longitude' => $arbre['longitude'],
     'prediction' => $prediction
-]);
+], 200);
+?>

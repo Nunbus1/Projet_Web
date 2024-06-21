@@ -2,11 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   async function fetchClusters(numClusters = 2) {
-    try {
-      const response = await fetch(
-        `../../back/php/cluster.php?numClusters=${numClusters}`
-      );
-      const clusters = await response.json();
+    ajaxRequest('GET', `../../back/php/cluster.php?numClusters=${numClusters}`, function(clusters) {
       console.log("Données reçues:", clusters);
 
       if (clusters.error) {
@@ -15,9 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       displayMap(clusters.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    });
   }
 
   function displayMap(clusters) {

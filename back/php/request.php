@@ -4,12 +4,9 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bddstquentin";
+require_once 'dbconnect.php';
+require_once 'data_encode.php';
 
-// Créer une connexion
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Vérifier la connexion
@@ -52,10 +49,10 @@ if ($action == 'addArbre') {
         $conn->query("INSERT INTO pied (id_arbre, id_pied, description) VALUES ('$id_arbre', '$id_arbre', '$fk_pied')");
 
         // Répondre avec succès et l'ID de l'arbre ajouté
-        echo json_encode(["success" => true, "id" => $id_arbre]);
+        sendJsonData(["success" => true, "id" => $id_arbre], 201);
     } else {
         // En cas d'échec de l'insertion, répondre avec l'erreur SQL
-        echo json_encode(["success" => false, "error" => $conn->error]);
+        sendJsonData(["success" => false, "error" => $conn->error], 500);
     }
 } elseif ($action == 'getFormData') {
     $response = [];
@@ -80,7 +77,8 @@ if ($action == 'addArbre') {
         $response['error'] = $conn->error;
     }
 
-    $result = $conn->query("SELECT DISTINCT description FROM stade_dev");
+    $result = $
+    $conn->query("SELECT DISTINCT description FROM stade_dev");
     if ($result) {
         $response['fk_stadedev'] = [];
         while ($row = $result->fetch_assoc()) {
@@ -111,10 +109,10 @@ if ($action == 'addArbre') {
     }
 
     // Répondre avec les données récupérées
-    echo json_encode($response);
+    sendJsonData($response, 200);
 } else {
     // Action non supportée
-    echo json_encode(['error' => 'Action non supportée']);
+    sendError(400);
 }
 
 // Fermer la connexion à la base de données

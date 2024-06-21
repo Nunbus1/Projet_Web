@@ -1,78 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="../css/header.css" />
-    <link rel="stylesheet" href="../css/footer.css" />
-    <link rel="stylesheet" href="../css/cluster.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/cluster.css" />
 
-    <!-- Script JS -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="../js/cluster.js" defer></script>
-  </head>
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <a href="home.html" data-anchor="accueil">Accueil</a>
-          <a href="form.html" data-anchor="add">Ajout d'arbre</a>
-          <a href="map.html" data-anchor="visualisation">Visualisation</a>
-        </ul>
-        <ul>
-          <div class="progress-bar"></div>
-        </ul>
-      </nav>
-    </header>
+  <!-- Script JS -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="../js/ajax.js"></script> <!-- Inclusion de ajax.js -->
+  <script src="../js/cluster.js" defer></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <a href="home.html" data-anchor="accueil">Accueil</a>
+        <a href="form.html" data-anchor="add">Ajout d'arbre</a>
+        <a href="map.html" data-anchor="visualisation">Visualisation</a>
+      </ul>
+      <ul>
+        <div class="progress-bar"></div>
+      </ul>
+    </nav>
+  </header>
 
-    <main>
-      <div id="map"></div>
-      <div id="tableContainer">
-        <h2>Cluster</h2>
-        <form id="clusterForm">
-          <label for="numClusters">Nombre de clusters:</label>
-          <select id="numClusters" name="numClusters">
-            <option value="2" selected>2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-          </select>
-          <button type="button" id="applyClusters">Appliquer</button>
-        </form>
-        <div id="legend">
-          <h3>Légende</h3>
-          <div>
-            <span class="color-box" style="background-color: red"></span>
-            Cluster 1
-          </div>
-          <div>
-            <span class="color-box" style="background-color: blue"></span>
-            Cluster 2
-          </div>
-          <div>
-            <span class="color-box" style="background-color: green"></span>
-            Cluster 3
-          </div>
+  <main>
+    <div id="map"></div>
+    <div id="tableContainer">
+      <h2>Cluster</h2>
+      <form id="clusterForm">
+        <label for="numClusters">Nombre de clusters:</label>
+        <select id="numClusters" name="numClusters">
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+        <button type="button" id="applyClusters">Appliquer</button>
+      </form>
+      <div id="legend">
+        <h3>Légende</h3>
+        <div>
+          <span class="color-box" style="background-color: red"></span>
+          Cluster 1
         </div>
-        <div id="pagination">
-          <!-- Les boutons de pagination seront générés par JavaScript -->
+        <div>
+          <span class="color-box" style="background-color: blue"></span>
+          Cluster 2
         </div>
-        <br />
-        <div class="details-arbres-buttons">
-          <a href="map.html"><button>Map</button></a>
+        <div>
+          <span class="color-box" style="background-color: green"></span>
+          Cluster 3
         </div>
       </div>
-    </main>
-    <footer>
-      <p class="footer">
-        Projet Web - Trinôme 2 | Groupe 1
-        <br />
-        Chapon Pier, Cordonnier Clara, Dutournier Vincent
-      </p>
-      <img src="../image/isen.jpg" alt="" />
-    </footer>
-  </body>
+      <div id="pagination">
+        <!-- Les boutons de pagination seront générés par JavaScript -->
+      </div>
+      <br />
+      <div class="details-arbres-buttons">
+        <a href="map.html"><button>Map</button></a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p class="footer">
+      Projet Web - Trinôme 2 | Groupe 1
+      <br />
+      Chapon Pier, Cordonnier Clara, Dutournier Vincent
+    </p>
+    <img src="../image/isen.jpg" alt="" />
+  </footer>
+</body>
 </html>

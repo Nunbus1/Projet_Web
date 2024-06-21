@@ -5,13 +5,13 @@ header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
 require_once 'dbconnect.php';
+require_once 'data_encode.php';
 
 $id = isset($_POST['id']) ? intval($_POST['id']) : null;
 $action = isset($_POST['action']) ? $_POST['action'] : '';
 
 if (!$id) {
-    echo json_encode(['error' => 'L\'ID de l\'arbre est requis']);
-    exit;
+    sendError(400);
 }
 
 $pythonScriptPath = escapeshellarg(__DIR__ . '/../script/age.py');
@@ -20,13 +20,12 @@ $command = "$pythonInterpreter $pythonScriptPath -id $id 2>&1";
 $output = shell_exec($command);
 
 if ($output === null) {
-    echo json_encode(['error' => 'Failed to execute Python script.', 'command' => $command]);
-    exit;
+    sendError(500);
 }
 
 $result = json_decode($output, true);
 if (isset($result['error'])) {
-    echo json_encode(['error' => $result['error']]);
+    sendError(500);
 } else {
     // Fetch additional data from the database
     $query = "SELECT n.nom, a.latitude, a.longitude, a.remarquable, a.haut_tot, a.tronc_diam, a.haut_tronc, e.description AS etat, s.description AS stade_dev, p.description AS port, pi.description AS pied
@@ -57,5 +56,6 @@ if (isset($result['error'])) {
     $result['port'] = $port;
     $result['pied'] = $pied;
 
-    echo json_encode(['success' => true, 'data' => $result]);
+    sendJsonData(['success' => true, 'data' => $result], 200);
 }
+?>
