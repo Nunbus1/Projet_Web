@@ -11,7 +11,9 @@
 
     <!-- Script JS -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/map.js" defer></script>
+
   </head>
   <body>
     <header>
@@ -36,13 +38,11 @@
         </div>
         <h2>Détails des Arbres</h2>
         <div id="filterOptions">
-          <input type="checkbox" id="filterDiametreCheckbox" />
-          <label for="filterDiametreCheckbox">diamètre>100</label>
-          <input type="checkbox" id="filterHauteurCheckbox" />
-          <label for="filterHauteurCheckbox">hauteur>10</label>
-          <input type="checkbox" id="filterEtatSelect" />
-          <label for="filterEtatSelect">Jeune</label>
-        </div>
+<input type="checkbox" id="filterDiametreCheckbox">
+<label for="filterDiametreCheckbox">diamètre>100</label>
+</div>
+<label for="fk_pied_filter">Filtrer par pied :</label>
+<select id="fk_pied_filter" name="fk_pied"></select>
         <table id="arbreTable">
           <thead>
             <tr>
@@ -56,7 +56,7 @@
               <th>Longitude</th>
               <th>Etat</th>
               <th>Stade de developpement</th>
-              <th>Pied</th>
+              <th class="pied_column">Pied</th>
               <th>Port</th>
             </tr>
           </thead>
@@ -70,8 +70,8 @@
         <br />
         <div class="details-arbres-buttons">
           <a href="cluster.html"><button>Cluster</button></a>
-          <a id="predict-age-button"><button>Prédire l'âge</button></a>
-          <a href="deracinement.html"><button>Déracinement</button></a>
+          <button id="predict-age-button">Prédire l'âge</button>
+          <button id="predict-deracinement-button">Déracinement</button>
         </div>
       </div>
     </main>
