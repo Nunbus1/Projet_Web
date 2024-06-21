@@ -44,7 +44,7 @@ main {
     backdrop-filter: blur(10px); 
     border-radius: 20px; 
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     padding: 2vh; 
     overflow-y: auto;
@@ -58,7 +58,8 @@ main {
 }
 
 .pres p {
-    margin-top: 5vmin;
+
+    margin-top: auto;
 }
 .comic-button {
     display: inline-block;
