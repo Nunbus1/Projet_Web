@@ -13,7 +13,6 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/map.js" defer></script>
-
   </head>
   <body>
     <header>
@@ -32,17 +31,13 @@
     <main>
       <div id="map"></div>
       <div id="tableContainer">
-        <div id="treeContainer">
-          <div id="trail"></div>
-          <div id="tree">🌸</div>
-        </div>
         <h2>Détails des Arbres</h2>
         <div id="filterOptions">
-<input type="checkbox" id="filterDiametreCheckbox">
-<label for="filterDiametreCheckbox">diamètre>100</label>
-</div>
-<label for="fk_pied_filter">Filtrer par pied :</label>
-<select id="fk_pied_filter" name="fk_pied"></select>
+          <input type="checkbox" id="filterDiametreCheckbox" />
+          <label for="filterDiametreCheckbox">diamètre>100</label>
+        </div>
+        <label for="fk_pied_filter">Filtrer par pied :</label>
+        <select id="fk_pied_filter" name="fk_pied"></select>
         <table id="arbreTable">
           <thead>
             <tr>
@@ -72,6 +67,10 @@
           <a href="cluster.html"><button>Cluster</button></a>
           <button id="predict-age-button">Prédire l'âge</button>
           <button id="predict-deracinement-button">Déracinement</button>
+        </div>
+        <div id="treeContainer">
+          <div id="trail"></div>
+          <div id="tree">🌸</div>
         </div>
       </div>
     </main>
