@@ -73,12 +73,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }"></td>
         <td>${arbre.nom}</td>
         <td>${arbre.haut_tot}</td>
+        <td>${arbre.haut_tronc}</td>
         <td>${arbre.tronc_diam}</td>
         <td>${arbre.remarquable ? "Oui" : "Non"}</td>
         <td>${arbre.latitude}</td>
         <td>${arbre.longitude}</td>
-        <td>${arbre.fk_stadedev}</td>
         <td>${arbre.fk_arb_etat}</td>
+        <td>${arbre.fk_stadedev}</td>
         <td>${arbre.fk_pied}</td>
         <td>${arbre.fk_port}</td>
 
