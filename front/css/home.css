@@ -47,8 +47,19 @@ main {
     justify-content: center;
     align-items: center;
     padding: 2vh; 
+    overflow-y: auto;
+    overflow-x: hidden; /* Masque le dépassement horizontal */
+    word-wrap: break-word; /* Permet de couper les mots trop longs */
 }
 
+.pres::-webkit-scrollbar {
+    width: 0px;  /* Retirer visuellement la barre de défilement verticale */
+    height: 0px;  /* Retirer visuellement la barre de défilement horizontale */
+}
+
+.pres p {
+    margin-top: 5vmin;
+}
 .comic-button {
     display: inline-block;
     padding: 2vh 1vw;
