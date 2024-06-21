@@ -33,6 +33,7 @@ main {
     color: #00505B;
     text-align: center;
     z-index: 2;
+    user-select: none;
 }
 
 .pres {
@@ -58,7 +59,7 @@ main {
 }
 
 .pres p {
-
+    user-select: none;
     margin-top: auto;
 }
 .comic-button {
@@ -69,6 +70,7 @@ main {
     text-align: center;
     text-decoration: none;
     color: #fff;
+    user-select: none;
     background-color: #00505B;
     border: 0.3vh solid #000;
     border-radius: 2vh;
