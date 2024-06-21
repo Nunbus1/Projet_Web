@@ -95,4 +95,3 @@ echo json_encode([
     'longitude' => $arbre['longitude'],
     'prediction' => $prediction
 ]);
-?>

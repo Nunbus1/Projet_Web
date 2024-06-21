@@ -1,74 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <!-- Style CSS -->
-  <link rel="stylesheet" href="../css/header.css" />
-  <link rel="stylesheet" href="../css/footer.css" />
-  <link rel="stylesheet" href="../css/map.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/map.css" />
 
-  <!-- Script JS -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="../js/map.js" defer></script>
-</head>
-<body>
-  <header>
-    <nav>
-      <ul>
-        <a href="home.html" data-anchor="accueil">Accueil</a>
-        <a href="form.html" data-anchor="add">Ajout d'arbre</a>
-        <a href="map.html" data-anchor="visualisation">Visualisation</a>
-      </ul>
-      <ul>
-        <div class="progress-bar"></div>
-      </ul>
-    </nav>
-  </header>
+    <!-- Script JS -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../js/map.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <a href="home.html" data-anchor="accueil">Accueil</a>
+          <a href="form.html" data-anchor="add">Ajout d'arbre</a>
+          <a href="map.html" data-anchor="visualisation">Visualisation</a>
+        </ul>
+        <ul>
+          <div class="progress-bar"></div>
+        </ul>
+      </nav>
+    </header>
 
-  <main>
-    <div id="map"></div>
-    <div id="tableContainer">
-      <div id="treeContainer">
-        <div id="trail"></div>
-        <div id="tree">🌸</div>
+    <main>
+      <div id="map"></div>
+      <div id="tableContainer">
+        <div id="treeContainer">
+          <div id="trail"></div>
+          <div id="tree">🌸</div>
+        </div>
+        <h2>Détails des Arbres</h2>
+        <div id="filterOptions">
+          <input type="checkbox" id="filterDiametreCheckbox" />
+          <label for="filterDiametreCheckbox">diamètre>100</label>
+          <input type="checkbox" id="filterHauteurCheckbox" />
+          <label for="filterHauteurCheckbox">hauteur>10</label>
+          <input type="checkbox" id="filterEtatSelect" />
+          <label for="filterEtatSelect">Jeune</label>
+        </div>
+        <table id="arbreTable">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Espèce</th>
+              <th>Hauteur totale</th>
+              <th>Hauteur tronc</th>
+              <th>Diamètre</th>
+              <th>Remarquable</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Etat</th>
+              <th>Stade de developpement</th>
+              <th>Pied</th>
+              <th>Port</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Les lignes du tableau seront générées par JavaScript -->
+          </tbody>
+        </table>
+        <div id="pagination">
+          <!-- Les boutons de pagination seront générés par JavaScript -->
+        </div>
+        <br />
+        <div class="details-arbres-buttons">
+          <a href="cluster.html"><button>Cluster</button></a>
+          <a id="predict-age-button"><button>Prédire l'âge</button></a>
+          <a href="deracinement.html"><button>Déracinement</button></a>
+        </div>
       </div>
-      <h2>Détails des Arbres</h2>
-      <table id="arbreTable">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Espèce</th>
-            <th>Hauteur</th>
-            <th>Diamètre</th>
-            <th>Remarquable</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Les lignes du tableau seront générées par JavaScript -->
-        </tbody>
-      </table>
-      <div id="pagination">
-        <!-- Les boutons de pagination seront générés par JavaScript -->
-      </div>
-      <br />
-      <div class="details-arbres-buttons">
-        <button id="predict-age-button">Prédire l'âge</button>
-        <button id="predict-deracinement-button">Prédire le déracinement</button>
-      </div>
-    </div>
-  </main>
-  <footer>
-    <p class="footer">
-      Projet Web - Trinôme 2 | Groupe 1
-      <br />
-      Chapon Pier, Cordonnier Clara, Dutournier Vincent
-    </p>
-    <img src="../image/isen.jpg" alt="" />
-  </footer>
-</body>
+    </main>
+    <footer>
+      <p class="footer">
+        Projet Web - Trinôme 2 | Groupe 1
+        <br />
+        Chapon Pier, Cordonnier Clara, Dutournier Vincent
+      </p>
+      <img src="../image/isen.jpg" alt="" />
+    </footer>
+  </body>
 </html>

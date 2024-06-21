@@ -1,24 +1,39 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const arbreId = urlParams.get('id');
-    const nom = urlParams.get('nom');
-    const hautTot = urlParams.get('haut_tot');
-    const troncDiam = urlParams.get('tronc_diam');
-    const remarquable = urlParams.get('remarquable');
-    const latitude = urlParams.get('latitude');
-    const longitude = urlParams.get('longitude');
-    const prediction = urlParams.get('prediction');
+$(document).ready(function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
 
-    if (!arbreId || !nom || !hautTot || !troncDiam || !remarquable || !latitude || !longitude || !prediction) {
-        alert("Données manquantes pour l'affichage des prédictions.");
-        return;
-    }
+  if (id) {
+    $.ajax({
+      url: "../../back/php/prediction.php",
+      type: "POST",
+      data: { id: id, action: "deracinement" },
+      dataType: "json",
+      success: function (response) {
+        console.log("Données reçues:", response);
 
-    document.querySelector("h3:nth-of-type(1)").textContent = `Espèce : ${nom}`;
-    document.querySelector("h3:nth-of-type(2)").textContent = `Hauteur : ${hautTot}`;
-    document.querySelector("h3:nth-of-type(3)").textContent = `Diamètre : ${troncDiam}`;
-    document.querySelector("h3:nth-of-type(4)").textContent = `Remarquable : ${remarquable}`;
-    document.querySelector("h3:nth-of-type(5)").textContent = `Latitude : ${latitude}`;
-    document.querySelector("h3:nth-of-type(6)").textContent = `Longitude : ${longitude}`;
-    document.querySelector("h3:nth-of-type(7)").textContent = `Risque de déracinement : ${prediction}`;
+        if (response.error) {
+          alert("Erreur: " + response.error);
+          return;
+        }
+
+        const data = response.data;
+
+        $("#species").text(data.nom);
+        $("#height").text(data.haut_tot);
+        $("#diameter").text(data.tronc_diam);
+        $("#remarkable").text(data.remarquable ? "Oui" : "Non");
+        $("#latitude").text(data.latitude);
+        $("#longitude").text(data.longitude);
+
+        $("#predicted_uprooting").text(
+          data.prediction === "true" ? "Oui" : "Non"
+        );
+      },
+      error: function (xhr, status, error) {
+        alert("Erreur lors de la prédiction.");
+      },
+    });
+  } else {
+    alert("Aucun arbre sélectionné.");
+  }
 });

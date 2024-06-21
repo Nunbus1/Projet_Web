@@ -1,45 +1,41 @@
-document.addEventListener("DOMContentLoaded", function () {
+$(document).ready(function () {
   const urlParams = new URLSearchParams(window.location.search);
-  const arbreId = urlParams.get("id");
-  const nom = urlParams.get("nom");
-  const hautTot = urlParams.get("haut_tot");
-  const troncDiam = urlParams.get("tronc_diam");
-  const remarquable = urlParams.get("remarquable");
-  const latitude = urlParams.get("latitude");
-  const longitude = urlParams.get("longitude");
-  const prediction = urlParams.get("prediction");
+  const id = urlParams.get("id");
 
-  if (
-    !arbreId ||
-    !nom ||
-    !hautTot ||
-    !troncDiam ||
-    !remarquable ||
-    !latitude ||
-    !longitude ||
-    !prediction
-  ) {
-    alert("Données manquantes pour l'affichage des prédictions.");
-    return;
+  if (id) {
+    $.ajax({
+      url: "../../back/php/prediction.php",
+      type: "POST",
+      data: { id: id, action: "age" },
+      dataType: "json",
+      success: function (data) {
+        console.log("Données reçues:", data); // Ajoutez cette ligne pour le débogage
+
+        if (data.error) {
+          alert("Erreur: " + data.error);
+          return;
+        }
+
+        $("#species").text(data.nom);
+        $("#height").text(data.haut_tot);
+        $("#diameter").text(data.tronc_diam);
+        $("#remarkable").text(data.remarquable ? "Oui" : "Non");
+        $("#latitude").text(data.latitude);
+        $("#longitude").text(data.longitude);
+
+        // Vérifiez si data.prediction est un nombre avant d'utiliser toFixed
+        if (data.prediction) {
+          $("#predicted_age").text(parseFloat(data.prediction).toFixed(2));
+        }
+        // else {
+        //   $("#predicted_age").text("N/A");
+        // }
+      },
+      error: function (xhr, status, error) {
+        alert("Erreur lors de la prédiction.");
+      },
+    });
+  } else {
+    alert("Aucun arbre sélectionné.");
   }
-
-  document.querySelector("h3:nth-of-type(1)").textContent = `Espèce : ${nom}`;
-  document.querySelector(
-    "h3:nth-of-type(2)"
-  ).textContent = `Hauteur : ${hautTot}`;
-  document.querySelector(
-    "h3:nth-of-type(3)"
-  ).textContent = `Diamètre : ${troncDiam}`;
-  document.querySelector(
-    "h3:nth-of-type(4)"
-  ).textContent = `Remarquable : ${remarquable}`;
-  document.querySelector(
-    "h3:nth-of-type(5)"
-  ).textContent = `Latitude : ${latitude}`;
-  document.querySelector(
-    "h3:nth-of-type(6)"
-  ).textContent = `Longitude : ${longitude}`;
-  document.querySelector(
-    "h3:nth-of-type(7)"
-  ).textContent = `Âge prédit : ${prediction}`;
 });

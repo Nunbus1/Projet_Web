@@ -1,5 +1,6 @@
 <?php
-function connectDB() {
+function connectDB()
+{
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -18,4 +19,3 @@ function connectDB() {
 
     return $conn;
 }
-?>
