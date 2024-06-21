@@ -8,15 +8,13 @@ $(document).ready(function () {
       type: "POST",
       data: { id: id, action: "deracinement" },
       dataType: "json",
-      success: function (response) {
-        console.log("Données reçues:", response);
+      success: function (data) {
+        console.log("Données reçues:", data); // Ajoutez cette ligne pour le débogage
 
-        if (response.error) {
-          alert("Erreur: " + response.error);
+        if (data.error) {
+          alert("Erreur: " + data.error);
           return;
         }
-
-        const data = response.data;
 
         $("#species").text(data.nom);
         $("#height").text(data.haut_tot);
@@ -25,9 +23,14 @@ $(document).ready(function () {
         $("#latitude").text(data.latitude);
         $("#longitude").text(data.longitude);
 
-        $("#predicted_uprooting").text(
-          data.prediction === "true" ? "Oui" : "Non"
-        );
+        // Vérifiez si data.prediction est un nombre avant d'utiliser toFixed
+        if (data.prediction) {
+          $("#predicted_uprooting").text(
+            data.prediction === "true" ? "Non" : "Oui"
+          );
+        } else {
+          $("#predicted_uprooting").text("N/A");
+        }
       },
       error: function (xhr, status, error) {
         alert("Erreur lors de la prédiction.");

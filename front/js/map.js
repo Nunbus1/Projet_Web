@@ -206,42 +206,24 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("predict-deracinement-button")
     .addEventListener("click", function () {
-      const selectedArbre = document.querySelector(
+      const checkedCheckbox = document.querySelector(
         'input[name="selectedArbre"]:checked'
-      );
-      if (selectedArbre) {
-        const arbreId = selectedArbre.getAttribute("data-id");
-
-        $.ajax({
-          type: "POST",
-          url: "../../back/php/prediction.php",
-          data: { id: arbreId, action: "deracinement" },
-          dataType: "json",
-          success: function (data) {
-            if (data.error) {
-              alert(data.error);
-            } else {
-              // Redirect to deracinement.html with the necessary data
-              const queryParams = new URLSearchParams({
-                id: arbreId,
-                nom: data.nom,
-                haut_tot: data.haut_tot,
-                tronc_diam: data.tronc_diam,
-                remarquable: data.remarquable,
-                latitude: data.latitude,
-                longitude: data.longitude,
-                prediction: data.prediction,
-              });
-              window.location.href = `deracinement.html?${queryParams.toString()}`;
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error("Erreur lors de la récupération des données:", error);
-            alert("Erreur lors de la récupération des données.");
-          },
-        });
-      } else {
-        alert("Veuillez sélectionner un arbre.");
+      );  
+      if (!checkedCheckbox) {
+        alert("Veuillez sélectionner un arbre pour prédire le déracinement.");
+        return;
       }
+
+      const selectedRow = checkedCheckbox.closest("tr");
+      const arbreId = checkedCheckbox.dataset.id;
+      const espece = selectedRow.cells[1].textContent;
+      const hauteur = selectedRow.cells[2].textContent;
+      const diametre = selectedRow.cells[3].textContent;
+      const remarquable = selectedRow.cells[4].textContent === "Oui" ? 1 : 0;
+      const latitude = selectedRow.cells[5].textContent;
+      const longitude = selectedRow.cells[6].textContent;
+
+      // Rediriger vers la page de déracinement en passant les informations de l'arbre sélectionné
+      window.location.href = `deracinement.html?id=${arbreId}&espece=${espece}&hauteur=${hauteur}&diametre=${diametre}&remarquable=${remarquable}&latitude=${latitude}&longitude=${longitude}`;
     });
 });
