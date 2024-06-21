@@ -10,7 +10,7 @@ html, body{
 }
 
 main {
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     border-radius: 8px;
     max-width: 80vw;
     
@@ -21,7 +21,7 @@ main {
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #00505B;
 }
 
 form {
@@ -105,17 +105,17 @@ form {
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    color: #fff;
+    color: #FFFFFF;
     background-color: #00505B;
-    border: 0.3vh solid #000;
+    border: 0.3vh solid #000000;
     border-radius: 2vh;
-    box-shadow: 5px 5px 0px #000;
+    box-shadow: 5px 5px 0px #000000;
     transition: all 0.3s ease;
     cursor: pointer;
 }
   
 .comic-button:hover {
-    background-color: #fff;
+    background-color: #FFFFFF;
     color: #00505B;
     border: 2px solid #00505B;
     box-shadow: 5px 5px 0px #00505B;
