@@ -23,11 +23,15 @@ html, body {
     height: 70vh;
     background: #00505b44;
     backdrop-filter: blur(10px);
-    padding: 20px;
+    padding: 2vmin;
     border-radius: 10px;
     overflow-y: auto;
     overflow-x: auto; /* Garder le défilement horizontal */
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1vmin;
+    
 }
 
 /* Masquer la scrollbar par défaut */
@@ -52,24 +56,22 @@ html, body {
 
 /* Conteneur de l'émote d'arbre en mouvement */
 #treeContainer {
-    position: absolute;
-    bottom: -10vh;
-    left: 0;
-    /* width: 100%; */
-    height: 4vh; /* Hauteur de l'émote */
-    background: rgb(77, 68, 33);
+    position: relative;
+    height: 4vh; 
+    background: #00505b98;
     border-radius: 20px;
     z-index: 2;
     overflow: hidden; /* Cache les parties débordantes de l'émote */
+    flex-shrink: 0; /* Empêche de se rétrécir */
 }
 
 #trail {
     position: absolute;
     top: 50%;
-    left: 0;
+    /* left: 0; */
     transform: translateY(-50%);
     height: 1vh; /* Hauteur de la traînée */
-    background: #369525; /* Couleur verte pour la traînée */
+    background: #42b72e; /* Couleur verte pour la traînée */
     z-index: -1; /* Derrière l'émote d'arbre */
     width: 0;
 }
