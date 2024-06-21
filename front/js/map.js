@@ -77,6 +77,12 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${arbre.remarquable ? "Oui" : "Non"}</td>
         <td>${arbre.latitude}</td>
         <td>${arbre.longitude}</td>
+        <td>${arbre.fk_stadedev}</td>
+        <td>${arbre.fk_arb_etat}</td>
+        <td>${arbre.fk_pied}</td>
+        <td>${arbre.fk_port}</td>
+
+
       `;
       tableBody.appendChild(row);
     });
