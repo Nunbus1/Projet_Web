@@ -3,12 +3,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   let currentPage = 1;
   const itemsPerPage = 5;
+  let arbresData = [];
 
   async function fetchArbres(page = 1) {
     try {
-      const response = await fetch(
-        `../../back/php/map.php?action=getArbres&page=${page}`
-      );
+      const response = await fetch(`../../back/php/map.php?action=getArbres&page=${page}`);
       const data = await response.json();
       console.log("Données reçues:", data);
 
@@ -17,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      arbresData = data.arbres_paginated; // Stocker les données des arbres
       displayMap(data.arbres_paginated);
       displayTable(data.arbres_paginated);
       setupPagination(data.totalPages, data.currentPage);
@@ -37,9 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         color: arbre.remarquable ? "green" : "fuchsia",
       },
       text: [
-        `Nom: ${arbre.nom}<br>Hauteur: ${arbre.haut_tot}m<br>Diamètre: ${
-          arbre.tronc_diam
-        }cm<br>Remarquable: ${arbre.remarquable ? "Oui" : "Non"}`,
+        `Nom: ${arbre.nom}<br>Hauteur: ${arbre.haut_tot}m<br>Diamètre: ${arbre.tronc_diam}cm<br>Remarquable: ${arbre.remarquable ? "Oui" : "Non"}`,
       ],
       hoverinfo: "text",
     }));
@@ -56,8 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     Plotly.newPlot("map", data, layout, {
-      mapboxAccessToken:
-        "pk.eyJ1IjoibnVuYnVzIiwiYSI6ImNseGppanZjdDFxdGoyanFwaG4wNjVtaG4ifQ.BXNSajM0Roj6pVMoUZc39A",
+      mapboxAccessToken: "pk.eyJ1IjoibnVuYnVzIiwiYSI6ImNseGppanZjdDFxdGoyanFwaG4wNjVtaG4ifQ.BXNSajM0Roj6pVMoUZc39A",
     });
   }
 
@@ -68,9 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     arbres.forEach((arbre) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><input type="radio" name="selectedArbre" class="arbre-checkbox" data-id="${
-          arbre.id_arbre
-        }"></td>
+        <td><input type="radio" name="selectedArbre" class="arbre-checkbox" data-id="${arbre.id_arbre}"></td>
         <td>${arbre.nom}</td>
         <td>${arbre.haut_tot}</td>
         <td>${arbre.haut_tronc}</td>
@@ -82,8 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${arbre.fk_stadedev}</td>
         <td>${arbre.fk_pied}</td>
         <td>${arbre.fk_port}</td>
-
-
       `;
       tableBody.appendChild(row);
     });
@@ -136,108 +129,92 @@ document.addEventListener("DOMContentLoaded", function () {
   $(document).ready(function() {
     // Appeler la fonction pour remplir les champs de sélection lors du chargement de la page
     $.ajax({
-        type: 'GET',
-        url: '../../back/php/filtre.php?action=getPiedData',
-        dataType: 'json',
-        encode: true
+      type: 'GET',
+      url: '../../back/php/filtre.php?action=getPiedData',
+      dataType: 'json',
+      encode: true
     }).done(function(data) {
-        fillSelectFields(data); 
+      fillSelectFields(data);
     }).fail(function(xhr, status, error) {
-        alert('Erreur lors de la récupération des données.');
+      alert('Erreur lors de la récupération des données.');
     });
 
     // Fonction pour remplir les champs de sélection
     function fillSelectFields(data) {
-        // Remplir le sélecteur pour le filtre par pied
-        $('#fk_pied_filter').empty().append($('<option>').text('Tous les pieds').attr('value', ''));
-        data.fk_pied.forEach(function(pied) {
-            $('#fk_pied_filter').append($('<option>').text(pied).attr('value', pied));
-        });
+      // Remplir le sélecteur pour le filtre par pied
+      $('#fk_pied_filter').empty().append($('<option>').text('Tous les pieds').attr('value', ''));
+      data.fk_pied.forEach(function(pied) {
+        $('#fk_pied_filter').append($('<option>').text(pied).attr('value', pied));
+      });
     }
-    const filterPiedSelect = document.getElementById("fk_pied_filter");
+
     // Écouteur d'événement pour le changement dans le sélecteur de pied
-    filterPiedSelect.addEventListener("change", function() {
-      const selectedPied = filterPiedSelect.value; // Valeur sélectionnée dans le select
-      filterDiametreCheckbox.checked = false;
-      // Filtrer les données des arbres en fonction de la valeur sélectionnée
+    $('#fk_pied_filter').on('change', function() {
+      const selectedPied = $(this).val(); // Valeur sélectionnée dans le select
+      filterArbresByPied(selectedPied);
+    });
+
+    // Fonction pour filtrer les arbres en fonction de la valeur sélectionnée
+    function filterArbresByPied(selectedPied) {
       const filteredArbres = selectedPied ? arbresData.filter(arbre => arbre.fk_pied === selectedPied) : arbresData;
       displayTable(filteredArbres); // Afficher les arbres filtrés
+    }
+
+    var tableContainer = document.getElementById("tableContainer");
+    var treeContainer = document.getElementById("treeContainer");
+    var tree = document.getElementById("tree");
+    var trail = document.getElementById("trail");
+    var isDragging = false;
+    var startX, scrollLeft;
+
+    function updateTreeContainerWidth() {
+      treeContainer.style.width = tableContainer.scrollWidth + "px";
+    }
+
+    function updateTreePosition() {
+      var scrollPercentage =
+        tableContainer.scrollLeft /
+        (tableContainer.scrollWidth - tableContainer.clientWidth);
+      var treePosition =
+        scrollPercentage * (tableContainer.scrollWidth - tree.clientWidth);
+      tree.style.left = treePosition + "px";
+      trail.style.width = treePosition + tree.clientWidth / 2 + "px";
+    }
+
+    tableContainer.addEventListener("scroll", updateTreePosition);
+    window.addEventListener("resize", updateTreeContainerWidth);
+    updateTreeContainerWidth();
+
+    tree.addEventListener("mousedown", function (e) {
+      isDragging = true;
+      startX = e.pageX - tree.offsetLeft;
+      scrollLeft = tableContainer.scrollLeft;
+      document.body.style.cursor = "grabbing";
     });
-  }
-);
-  // Configuration des filtres
-  function setupFilterListeners() {
 
-    filterDiametreCheckbox.addEventListener("change", function () {
-
-      if (this.checked) {
-        const filteredArbres = arbresData.filter(arbre => arbre.tronc_diam>100);
-        displayTable(filteredArbres);
-      } else {
-        displayTable(arbresData); // Afficher tous les arbres si la checkbox est décochée
-      }
+    document.addEventListener("mouseup", function () {
+      isDragging = false;
+      document.body.style.cursor = "default";
     });
-  }
 
-  var tableContainer = document.getElementById("tableContainer");
-  var treeContainer = document.getElementById("treeContainer");
-  var tree = document.getElementById("tree");
-  var trail = document.getElementById("trail");
-  var isDragging = false;
-  var startX, scrollLeft;
+    document.addEventListener("mousemove", function (e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      var x = e.pageX - treeContainer.offsetLeft;
+      var walk = x - startX;
+      var scrollPercentage =
+        walk / (treeContainer.scrollWidth - tree.clientWidth);
+      tableContainer.scrollLeft =
+        scrollPercentage *
+        (tableContainer.scrollWidth - tableContainer.client.clientWidth);
+    });
 
-  function updateTreeContainerWidth() {
-    treeContainer.style.width = tableContainer.scrollWidth + "px";
-  }
+    updateTreePosition();
 
-  function updateTreePosition() {
-    var scrollPercentage =
-      tableContainer.scrollLeft /
-      (tableContainer.scrollWidth - tableContainer.clientWidth);
-    var treePosition =
-      scrollPercentage * (tableContainer.scrollWidth - tree.clientWidth);
-    tree.style.left = treePosition + "px";
-    trail.style.width = treePosition + tree.clientWidth / 2 + "px";
-  }
+    fetchArbres(currentPage);
 
-  tableContainer.addEventListener("scroll", updateTreePosition);
-  window.addEventListener("resize", updateTreeContainerWidth);
-  updateTreeContainerWidth();
-
-  tree.addEventListener("mousedown", function (e) {
-    isDragging = true;
-    startX = e.pageX - tree.offsetLeft;
-    scrollLeft = tableContainer.scrollLeft;
-    document.body.style.cursor = "grabbing";
-  });
-
-  document.addEventListener("mouseup", function () {
-    isDragging = false;
-    document.body.style.cursor = "default";
-  });
-
-  document.addEventListener("mousemove", function (e) {
-    if (!isDragging) return;
-    e.preventDefault();
-    var x = e.pageX - treeContainer.offsetLeft;
-    var walk = x - startX;
-    var scrollPercentage =
-      walk / (treeContainer.scrollWidth - tree.clientWidth);
-    tableContainer.scrollLeft =
-      scrollPercentage *
-      (tableContainer.scrollWidth - tableContainer.client.clientWidth);
-  });
-
-  updateTreePosition();
-
-  fetchArbres(currentPage);
-
-  document
-    .getElementById("predict-age-button")
-    .addEventListener("click", function () {
-      const checkedCheckbox = document.querySelector(
-        'input[name="selectedArbre"]:checked'
-      );
+    document.getElementById("predict-age-button").addEventListener("click", function () {
+      const checkedCheckbox = document.querySelector('input[name="selectedArbre"]:checked');
       if (!checkedCheckbox) {
         alert("Veuillez sélectionner un arbre pour prédire l'âge.");
         return;
@@ -256,12 +233,8 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = `age.html?id=${arbreId}&espece=${espece}&hauteur=${hauteur}&diametre=${diametre}&remarquable=${remarquable}&latitude=${latitude}&longitude=${longitude}`;
     });
 
-    document
-    .getElementById("predict-deracinement-button")
-    .addEventListener("click", function () {
-      const checkedCheckbox = document.querySelector(
-        'input[name="selectedArbre"]:checked'
-      );  
+    document.getElementById("predict-deracinement-button").addEventListener("click", function () {
+      const checkedCheckbox = document.querySelector('input[name="selectedArbre"]:checked');
       if (!checkedCheckbox) {
         alert("Veuillez sélectionner un arbre pour prédire le déracinement.");
         return;
@@ -279,4 +252,5 @@ document.addEventListener("DOMContentLoaded", function () {
       // Rediriger vers la page de déracinement en passant les informations de l'arbre sélectionné
       window.location.href = `deracinement.html?id=${arbreId}&espece=${espece}&hauteur=${hauteur}&diametre=${diametre}&remarquable=${remarquable}&latitude=${latitude}&longitude=${longitude}`;
     });
+  });
 });
